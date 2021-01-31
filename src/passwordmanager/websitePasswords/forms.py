@@ -7,10 +7,6 @@ class WebsitePasswordForm(forms.ModelForm):
 
     master_password = forms.CharField(max_length=120)
 
-    def __init__(self, user, *args, **kwargs):
-        super(WebsitePasswordForm, self).__init__(*args, **kwargs)
-        user = user
-
     class Meta:
         model = WebsitePassword
         fields = [

@@ -5,6 +5,6 @@ from .views import WebsitePasswordCreateView
 
 
 app_name = 'websitepasswords'
-url_patterns = [
-    path('create/', login_required(WebsitePasswordCreateView.as_view()))
+urlpatterns = [
+    path('create/', login_required(WebsitePasswordCreateView.as_view()), name='websitePassword-create')
 ]

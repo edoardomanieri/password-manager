@@ -12,4 +12,4 @@ class WebsitePassword(models.Model):
     notes = models.TextField(blank=True)
 
     def get_absolute_url(self):
-        return reverse("websitepasswords:password-detail", kwargs={"id": self.id})
+        return reverse("websitepasswords:websitePassword-create")
