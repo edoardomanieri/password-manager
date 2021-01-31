@@ -8,7 +8,7 @@ class WebsitePassword(models.Model):
     website_url = models.URLField()
     website_name = models.CharField(max_length=120)
     username = models.CharField(max_length=120) 
-    password = models.CharField(max_length=120)
+    password = models.CharField(max_length=10000)
     notes = models.TextField(blank=True)
 
     def get_absolute_url(self):
