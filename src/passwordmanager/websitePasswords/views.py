@@ -33,3 +33,19 @@ class WebsitePasswordCreateView(CreateView):
         kwargs = super(WebsitePasswordCreateView, self).get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
+
+
+class WebsitePasswordListView(ListView):
+    template_name = 'websitepassword_list.html'
+    queryset = WebsitePassword.objects.all()
+
+    def get_queryset(self):
+        return WebsitePassword.objects.filter(user=self.request.user) 
+
+
+class WebsitePasswordDetailView(DetailView):
+    template_name = 'websitepassword_detail.html'
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(WebsitePassword, id=id_)

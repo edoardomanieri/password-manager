@@ -30,6 +30,7 @@ class WebsitePasswordForm(forms.ModelForm):
             'notes'
         ]
 
+
     def clean_password(self):
         # check that the master password is correct and that the website password is at least 4 character long
         # cleaned_data doesn't work for fields not in model
