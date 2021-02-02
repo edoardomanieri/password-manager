@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.models import User
 from django.urls import reverse
+from django.http import JsonResponse
 from django.views.generic import (
     CreateView,
     DetailView,
@@ -10,6 +12,8 @@ from django.views.generic import (
 
 from .forms import WebsitePasswordForm
 from .models import WebsitePassword
+from .encryption import decrypt
+
 
 # Create your views here.
 class WebsitePasswordCreateView(CreateView):
@@ -49,3 +53,22 @@ class WebsitePasswordDetailView(DetailView):
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(WebsitePassword, id=id_)
+
+
+## ajax function view
+def get_decrypted_password(request, *args, **kwargs):
+    master_password = request.POST['master_password']
+    print(master_password + "ciao")
+    wrong_password = not request.user.check_password(master_password)
+    id_ = kwargs.get("id")
+    encrypted_password = get_object_or_404(WebsitePassword, id=id_).password
+    plain_password = "" if wrong_password else decrypt(encrypted_password, master_password)
+    data = {
+        'wrong_password': wrong_password,
+        'plain_password': plain_password
+    }
+    return JsonResponse(data)
+
+    
+
+

@@ -21,14 +21,14 @@ def _generate_key(master_password):
 def encrypt(password, master_password):
     key = _generate_key(master_password)
     cipher_suite = Fernet(key)
-    cipher_text = cipher_suite.encrypt(password.encode())
+    cipher_text = cipher_suite.encrypt(password.encode()).decode()
     return cipher_text
 
 
 def decrypt(cipher_text, master_password):
     key = _generate_key(master_password)
     cipher_suite = Fernet(key)
-    password_plain = cipher_suite.decrypt(cipher_text).decode()
+    password_plain = cipher_suite.decrypt(cipher_text.encode()).decode()
     return password_plain
 
 
