@@ -10,6 +10,3 @@ class WebsitePassword(models.Model):
     username = models.CharField(max_length=120) 
     password = models.CharField(max_length=10000)
     notes = models.TextField(blank=True)
-
-    def get_absolute_url(self):
-        return reverse("websitepasswords:websitepassword-detail", args=[str(self.id)])
