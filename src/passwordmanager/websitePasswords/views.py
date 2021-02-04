@@ -4,18 +4,33 @@ from django.urls import reverse
 from django.http import JsonResponse
 from rest_framework.generics import (
     CreateAPIView, 
-    ListAPIView
+    ListAPIView,
 )
+from rest_framework.response import Response
+from rest_framework.serializers import Serializer
+from rest_framework.views import APIView
+from rest_framework import generics, status
 
-from .serializers import WebsitePasswordSerializer
+
+from .serializers import WebsitePasswordSerializer, CreateWebsitePasswordSerializer
 from .models import WebsitePassword
 from .encryption import decrypt
 
 
 # Create your views here.
-class WebsitePasswordCreateView(CreateAPIView):
-    serializer_class = WebsitePasswordSerializer
-    queryset = WebsitePassword.objects.all()
+class WebsitePasswordCreateView(APIView):
+    serializer_class = CreateWebsitePasswordSerializer
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            user = str(request.user)
+            data = {k: v for k,v in serializer.data.items() if k != 'master_password'}
+            websitePassword = WebsitePassword(user=user, **data)
+            websitePassword.save()
+            return Response(WebsitePasswordSerializer(websitePassword).data, status=status.HTTP_201_CREATED)
+        return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
+        
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
