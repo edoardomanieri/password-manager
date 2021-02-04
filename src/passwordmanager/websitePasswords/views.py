@@ -8,34 +8,27 @@ from rest_framework.generics import (
 )
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
-from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 from rest_framework import generics, status
+from rest_framework.views import APIView
 
 
-from .serializers import WebsitePasswordSerializer, CreateWebsitePasswordSerializer
+from .serializers import CreateWebsitePasswordSerializer, WebsitePasswordSerializer
 from .models import WebsitePassword
 from .encryption import decrypt
 
 
 # Create your views here.
-class WebsitePasswordCreateView(APIView):
+class WebsitePasswordCreateView(CreateAPIView):
     serializer_class = CreateWebsitePasswordSerializer
+    queryset = WebsitePassword.objects.all()
 
-    def post(self, request, format=None):
-        serializer = self.serializer_class(data=request.data)
+    def create(self, request, *args,  **kwargs):
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            user = str(request.user)
-            data = {k: v for k,v in serializer.data.items() if k != 'master_password'}
-            websitePassword = WebsitePassword(user=user, **data)
-            websitePassword.save()
+            websitePassword = serializer.save()
             return Response(WebsitePasswordSerializer(websitePassword).data, status=status.HTTP_201_CREATED)
-        return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
-        
-
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context["user"] = self.request.user
-        return context
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 ## ajax function view

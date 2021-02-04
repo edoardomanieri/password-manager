@@ -4,8 +4,8 @@ from django.urls import reverse
 
 # Create your models here.
 class WebsitePassword(models.Model):
-    user = models.CharField(max_length=120)
-    website_url = models.URLField()
+    user = models.CharField(max_length=120, unique=True)
+    website_url = models.CharField(max_length=120)
     website_name = models.CharField(max_length=120)
     username = models.CharField(max_length=120) 
     password = models.CharField(max_length=10000)
