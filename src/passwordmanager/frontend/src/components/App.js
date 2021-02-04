@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
-
+import HomePage from "./HomePage";
 
 export default class App extends Component {
     constructor(props) {
         super(props);
+        // render automatically when modify with states
+
     }
 
-
     render() {
-        return <h1>Test my app</h1>;
+        return <HomePage />;
     }
 }
 
