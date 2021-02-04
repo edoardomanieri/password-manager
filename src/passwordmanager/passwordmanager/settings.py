@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'rest_framework',    
 
     'websitePasswords',
-    'accounts'
+    'accounts',
+    'frontend.apps.FrontendConfig'
 ]
 
 MIDDLEWARE = [
