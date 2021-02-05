@@ -48,6 +48,7 @@ export default function CreateWebsitePassword() {
   const csrfToken = Cookies.get('csrftoken');
 
   function handleSubmit(){
+      console.log(localStorage.getItem('token'));
       Axios.post("/websitepasswords/create-website-password/",
       {
         'website_url': websiteURL,
@@ -58,13 +59,15 @@ export default function CreateWebsitePassword() {
         'master_password': masterPassword
       },
       {
-    headers: { "Content-Type": "application/json",
-                "X-CSRFToken": csrfToken 
+    headers: {
+                Authorization: `JWT ${localStorage.getItem('token')}`,
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken,
             }
     }
     )
     .then(response => console.log(response))
-    .catch(error => console.log(error));
+    .catch(error => alert("you must be authenticated"));
 }
 
 

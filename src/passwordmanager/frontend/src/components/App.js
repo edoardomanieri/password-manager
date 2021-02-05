@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import CreateWebsitePassword from "./CreateWebsitePassword";
+import Login from "./Login";
 import HomePage from "./HomePage";
 
 export default class App extends Component {
@@ -54,11 +57,15 @@ export default class App extends Component {
 
 
     render() {
-        return <HomePage 
-        logged_in={this.state.logged_in}
-        handle_logout={this.state.handle_logout}
-        handle_signup={this.state.handle_signup}
-         />;
+        return (
+            <Router>
+                <Switch>
+                    <Route exact path="/" component={HomePage} />
+                    <Route path='/create' component={CreateWebsitePassword}/>
+                    <Route path='/login' component={Login}/>
+                </Switch>
+            </Router>
+            )
     }
 }
 

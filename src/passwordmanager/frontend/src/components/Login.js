@@ -79,7 +79,7 @@ export default function Login(props) {
       }
     })
     .then(res => {
-        localStorage.setItem('token', res.token);
+        localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', username);
         history.push("/");
       })
