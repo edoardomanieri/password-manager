@@ -9,6 +9,7 @@ from rest_framework.generics import (
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
+from rest_framework.authentication import TokenAuthentication
 
 from .serializers import CreateWebsitePasswordSerializer, WebsitePasswordSerializer
 from .models import WebsitePassword
@@ -19,7 +20,8 @@ from .encryption import decrypt
 class WebsitePasswordCreateView(CreateAPIView):
     serializer_class = CreateWebsitePasswordSerializer
     queryset = WebsitePassword.objects.all()
-    permission_classes = [permissions.AllowAny]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
     def create(self, request, *args,  **kwargs):
         serializer = self.get_serializer(data=request.data)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, use } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,8 +12,8 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from "react-router-dom";
 import Axios from 'axios';
-import Cookies from 'js-cookie';
 
 function Copyright() {
   return (
@@ -59,28 +59,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide() {
+
+export default function Login(props) {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const csrfToken = Cookies.get('csrftoken');
+  const history = useHistory();
 
 
-  function handleSubmit(){
-
-    Axios.post('api-token-auth/',
+  function handle_login() {
+    Axios.post('/login/token-auth/',
     {
-      'username': username,
-      'password': password
+      username: username,
+      password: password
     },
-    {
-  headers: { "Content-Type": "application/json"}
-  }
-  )
-  .then(response => console.log("ciao ciao"))
-  .catch(error => alert("Wrong username or password"));
-
-  }
+     {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => {
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('user', username);
+        history.push("/");
+      })
+    .catch(error => alert(error))
+  };
 
 
   return (
@@ -95,7 +99,7 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <form className={classes.form} noValidate onSubmit={ handleSubmit }>
+          <form className={classes.form} noValidate onSubmit={ handle_login }>
             <TextField
               variant="outlined"
               margin="normal"
@@ -132,7 +136,7 @@ export default function SignInSide() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={ handleSubmit }
+              onClick={ handle_login }
             >
               Sign In
             </Button>
