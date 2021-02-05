@@ -15,8 +15,12 @@
     "@babel/preset-env": "^7.12.13",
     "@babel/preset-react": "^7.12.13",
     "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.1",
+    "file-loader": "^6.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "style-loader": "^2.0.0",
+    "to-string-loader": "^1.1.6",
     "webpack": "^5.20.1",
     "webpack-cli": "^4.5.0"
   },
@@ -26,6 +30,7 @@
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "js-cookie": "^2.2.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "react-use-scroll-position": "^2.0.0"
   }
 }

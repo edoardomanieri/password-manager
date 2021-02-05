@@ -61,10 +61,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Login(props) {
-  const classes = useStyles();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+  const classes = useStyles();
 
 
   function handle_login() {

@@ -1,9 +1,23 @@
+import "../../static/css/styles.css";
+
 import React, { Component } from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import CreateWebsitePassword from "./CreateWebsitePassword";
 import Login from "./Login";
 import HomePage from "./HomePage";
+import NavBar from "./Navbar";
+
+
+
+const DecisionRoute = ( {trueComponent, falseComponent, decisionFunc, ...rest} ) => {
+    return (
+      <Route
+        {...rest}
+        component={ decisionFunc() ? trueComponent : falseComponent }
+      />
+    )
+  }
 
 export default class App extends Component {
     constructor(props) {
@@ -14,19 +28,19 @@ export default class App extends Component {
           };
     }
 
-    componentDidMount() {
-        if (this.state.logged_in) {
-          fetch('/accounts/current_user/', {
-            headers: {
-              Authorization: `JWT ${localStorage.getItem('token')}`
-            }
-          })
-            .then(res => res.json())
-            .then(json => {
-              this.setState({ username: json.username });
-            });
-        }
-      }
+    // componentDidMount() {
+    //     if (this.state.logged_in) {
+    //       fetch('/accounts/current_user/', {
+    //         headers: {
+    //           Authorization: `JWT ${localStorage.getItem('token')}`
+    //         }
+    //       })
+    //         .then(res => res.json())
+    //         .then(json => {
+    //           this.setState({ username: json.username });
+    //         });
+    //     }
+    //   }
 
 
 
@@ -56,12 +70,14 @@ export default class App extends Component {
       };
 
 
+
     render() {
         return (
             <Router>
+                <NavBar />
                 <Switch>
                     <Route exact path="/" component={HomePage} />
-                    <Route path='/create' component={CreateWebsitePassword}/>
+                    <DecisionRoute path='/create' trueComponent={CreateWebsitePassword} falseComponent={HomePage} decisionFunc={ () => localStorage.getItem('token') ? true : false }/>
                     <Route path='/login' component={Login}/>
                 </Switch>
             </Router>

@@ -15,8 +15,6 @@ import Container from '@material-ui/core/Container';
 import Cookies from 'js-cookie';
 import Axios from 'axios';
 
-
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -38,17 +36,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CreateWebsitePassword() {
-  const classes = useStyles();
+    
   const [websiteURL, setWebsiteURL] = useState("");
   const [websiteName, setWebsiteName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [notes, setNotes] = useState("");
   const [masterPassword, setMasterPassword] = useState("");
+  const classes = useStyles();
   const csrfToken = Cookies.get('csrftoken');
 
   function handleSubmit(){
-      console.log(localStorage.getItem('token'));
       Axios.post("/websitepasswords/create-website-password/",
       {
         'website_url': websiteURL,
@@ -59,7 +57,7 @@ export default function CreateWebsitePassword() {
         'master_password': masterPassword
       },
       {
-    headers: {
+        headers: {
                 Authorization: `JWT ${localStorage.getItem('token')}`,
                 "Content-Type": "application/json",
                 "X-CSRFToken": csrfToken,
@@ -67,7 +65,7 @@ export default function CreateWebsitePassword() {
     }
     )
     .then(response => console.log(response))
-    .catch(error => alert("you must be authenticated"));
+    .catch(error => alert(error));
 }
 
 
