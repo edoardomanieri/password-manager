@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Cookies from 'js-cookie';
+import Axios from 'axios';
 
 
 
@@ -41,23 +43,28 @@ export default function CreateWebsitePassword() {
   const [websiteName, setWebsiteName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [notes, setNotes] = useState("");
   const [masterPassword, setMasterPassword] = useState("");
+  const csrfToken = Cookies.get('csrftoken');
 
   function handleSubmit(){
-    const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json"},
-    body: JSON.stringify({
-      website_url: websiteURL,
-      website_name: websiteName,
-      username: username,
-      password: password,
-      masterPassword: masterPassword
-    }),
-  };
-  fetch("/websitepasswords/create-website-password/", requestOptions)
-    .then((response) => response.json())
-    .then((data) => console.log(data));
+      Axios.post("/websitepasswords/create-website-password/",
+      {
+        'website_url': websiteURL,
+        'website_name': websiteName,
+        'username': username,
+        'password': password,
+        'notes': notes,
+        'master_password': masterPassword
+      },
+      {
+    headers: { "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken 
+            }
+    }
+    )
+    .then(response => console.log(response))
+    .catch(error => console.log(error));
 }
 
 
@@ -130,6 +137,18 @@ export default function CreateWebsitePassword() {
                 variant="outlined"
                 required
                 fullWidth
+                id="notes"
+                label="notes"
+                name="notes"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
                 name="masterPassword"
                 label="Master Password"
                 type="password"
@@ -140,11 +159,12 @@ export default function CreateWebsitePassword() {
             </Grid>
           </Grid>
           <Button
-            type="submit"
+            type="button"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Save Website Password
           </Button>
