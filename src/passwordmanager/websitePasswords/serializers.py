@@ -11,7 +11,6 @@ class WebsitePasswordSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
 # only the fields that we need for the post request
 class CreateWebsitePasswordSerializer(serializers.ModelSerializer):
     master_password = serializers.CharField(max_length=100)
@@ -27,7 +26,7 @@ class CreateWebsitePasswordSerializer(serializers.ModelSerializer):
             'master_password'
         ]
 
-    def validate(self, data):	
+    def validate(self, data):
         # check that the master password is correct and that the website password is at least 4 character long	
         # cleaned_data doesn't work for fields not in model	
         master_password = data.get('master_password')
