@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
+import HeroBanner from './HeroBanner';
+
 
 
 export default class HomePage extends Component {
     constructor(props) {
         super(props);
-        // render automatically when modify with states
-
     }
 
     render(){
-        return <p></p>;
+        return (
+         <HeroBanner />
+        );
     }
 }

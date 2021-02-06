@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-ro
 import CreateWebsitePassword from "./CreateWebsitePassword";
 import Login from "./Login";
 import HomePage from "./HomePage";
-import NavBar from "./Navbar";
+import Navbar from "./Navbar";
 
 
 
@@ -74,7 +74,7 @@ export default class App extends Component {
     render() {
         return (
             <Router>
-                <NavBar />
+                <Navbar />
                 <Switch>
                     <Route exact path="/" component={HomePage} />
                     <DecisionRoute path='/create' trueComponent={CreateWebsitePassword} falseComponent={HomePage} decisionFunc={ () => localStorage.getItem('token') ? true : false }/>

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   avatar: {
     margin: theme.spacing(1),
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(3)
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CreateWebsitePassword() {
-    
+
   const [websiteURL, setWebsiteURL] = useState("");
   const [websiteName, setWebsiteName] = useState("");
   const [username, setUsername] = useState("");
@@ -71,7 +71,7 @@ export default function CreateWebsitePassword() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
+        <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
