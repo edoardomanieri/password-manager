@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import WebsitePasswordCard from "./WebsitePasswordCard";
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from "@material-ui/core/Box"
 import Paper from "@material-ui/core/Paper"
@@ -44,9 +44,20 @@ function ObjectRow( {object, paper} ) {
     return (
         <Grid item xs>
         <Paper className={paper}>
+        <Link to={{
+            pathname:`/${object.user}/${object.website_name}`,
+            state: {
+                website_name: object.website_name,
+                website_url: object.website_url,
+                username: object.username,
+                password: object.password,
+                notes: object.notes
+            }
+        }}>
           <Button variant="contained" color="primary">
           {object.website_name}
         </Button>
+        </Link>
         </Paper>
         </Grid>
     );

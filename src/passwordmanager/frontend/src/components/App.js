@@ -9,6 +9,7 @@ import HomePage from "./HomePage";
 import Navbar from "./Navbar";
 import SignUp from "./SignUp";
 import WebsitePasswordList from "./WebsitePasswordList";
+import WebsitePasswordDetail from "./WebsitePasswordDetail";
 
 
 const DecisionRoute = ( {trueComponent, falseComponent, decisionFunc, ...rest} ) => {
@@ -61,6 +62,7 @@ export default class App extends Component {
                     <DecisionRoute path='/list' trueComponent={WebsitePasswordList} falseComponent={HomePage} decisionFunc={ () => this.state.isLoggedIn}/>
                     <Route path='/login' render={(props) => <Login {...props} setLogin={this.setLogin} />}/>
                     <Route path='/signup' component={SignUp}/>
+                    <Route path='/:user/:website_name' component={WebsitePasswordDetail}/>
                 </Switch>
             </Router>
             )

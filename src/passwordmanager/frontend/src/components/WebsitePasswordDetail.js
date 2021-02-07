@@ -23,24 +23,29 @@ const useStyles = makeStyles({
   },
 });
 
-export default function WebsitePasswordCard( {websitePassword} ) {
+export default function WebsitePasswordDetail(props) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+  const { website_name } = props.match.params;
+  const { website_url } = props.location.state;
+  const { username } = props.location.state;
+  const { password } = props.location.state;
+  const { notes } = props.location.state;
+
 
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography variant="h5" component="h2" gutterBottom>
-          Website name: {websitePassword.website_name}
+          Website name: {website_name}
         </Typography>
         <Typography variant="h5" component="h2">
-          Website url: {websitePassword.website_url}
+          Website url: {website_url}
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
-          Username: {websitePassword.username}
+          Username: {username}
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
-          Notes: {websitePassword.notes}
+          Notes: {notes}
         </Typography>
       </CardContent>
       <CardActions>
