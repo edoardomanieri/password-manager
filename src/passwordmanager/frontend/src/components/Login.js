@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Login(props) {
+export default function Login({ setLogin }) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -71,8 +71,8 @@ export default function Login(props) {
   function handle_login() {
     Axios.post('/login/token-auth/',
     {
-      username: username,
-      password: password
+      'username': username,
+      'password': password
     },
      {
       headers: {
@@ -82,6 +82,7 @@ export default function Login(props) {
     .then(res => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', username);
+        setLogin();
         history.push("/");
       })
     .catch(error => alert(error))

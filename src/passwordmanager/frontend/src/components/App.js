@@ -7,6 +7,7 @@ import CreateWebsitePassword from "./CreateWebsitePassword";
 import Login from "./Login";
 import HomePage from "./HomePage";
 import Navbar from "./Navbar";
+import SignUp from "./SignUp";
 
 
 
@@ -23,9 +24,10 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            logged_in: localStorage.getItem('token') ? true : false,
+            isLoggedIn: localStorage.getItem('token') ? true : false,
             username: ''
           };
+        this.setLogin = this.setLogin.bind(this);
     }
 
     // componentDidMount() {
@@ -42,43 +44,22 @@ export default class App extends Component {
     //     }
     //   }
 
-
-
-    handle_signup = (e, data) => {
-        e.preventDefault();
-        fetch('http://localhost:8000/core/users/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
+    setLogin = () => {
+        this.setState({ 
+            isLoggedIn: localStorage.getItem('token') ? true : false,
+            username: ''
         })
-          .then(res => res.json())
-          .then(json => {
-            localStorage.setItem('token', json.token);
-            this.setState({
-              logged_in: true,
-              displayed_form: '',
-              username: json.username
-            });
-          });
-      };
-    
-    handle_logout = () => {
-        localStorage.removeItem('token');
-        this.setState({ logged_in: false, username: '' });
-      };
-
-
+    }
 
     render() {
         return (
             <Router>
-                <Navbar />
+                <Navbar isLoggedIn={this.state.isLoggedIn} setLogin={this.setLogin}/>
                 <Switch>
                     <Route exact path="/" component={HomePage} />
-                    <DecisionRoute path='/create' trueComponent={CreateWebsitePassword} falseComponent={HomePage} decisionFunc={ () => localStorage.getItem('token') ? true : false }/>
-                    <Route path='/login' component={Login}/>
+                    <DecisionRoute path='/create' trueComponent={CreateWebsitePassword} falseComponent={HomePage} decisionFunc={ () => this.state.isLoggedIn}/>
+                    <Route path='/login' render={(props) => <Login {...props} setLogin={this.setLogin} />}/>
+                    <Route path='/signup' component={SignUp}/>
                 </Switch>
             </Router>
             )

@@ -3,6 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
@@ -81,7 +82,7 @@ export default function CreateWebsitePassword() {
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="fname"
                 name="websiteURL"
@@ -95,7 +96,7 @@ export default function CreateWebsitePassword() {
                 onChange={(e) => setWebsiteURL(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
@@ -138,11 +139,12 @@ export default function CreateWebsitePassword() {
                 variant="outlined"
                 required
                 fullWidth
-                id="notes"
-                label="notes"
-                name="notes"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
+                name="masterPassword"
+                label="Master Password"
+                type="password"
+                id="masterPassword"
+                value={masterPassword}
+                onChange={(e) => setMasterPassword(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -150,12 +152,12 @@ export default function CreateWebsitePassword() {
                 variant="outlined"
                 required
                 fullWidth
-                name="masterPassword"
-                label="Master Password"
-                type="password"
-                id="masterPassword"
-                value={masterPassword}
-                onChange={(e) => setMasterPassword(e.target.value)}
+                multiline
+                label="Notes"
+                id="notes"
+                name="notes"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
               />
             </Grid>
           </Grid>

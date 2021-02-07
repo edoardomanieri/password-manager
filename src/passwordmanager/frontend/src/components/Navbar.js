@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { useScrollYPosition } from "react-use-scroll-position";
+import { NavLink } from "react-router-dom"
 import '../../static/css/Navbar.css';
 
-function Navbar({ links }) {
+function Navbar({ isLoggedIn, setLogin }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const scrollY = useScrollYPosition();
 
   const stickeyTrigger = window.innerHeight / 2.75;
+
+  function handle_logout() {
+    localStorage.removeItem('token');
+    setLogin();
+  };
 
   return (
     <div
@@ -17,15 +23,25 @@ function Navbar({ links }) {
         <div className="nav-logo">PasswordManager</div>
 
         <nav className="nav-links__container">
-          {links &&
-            links.map((link, i) => (
-              <a className="nav-link" href={link.href} key={i}>
-                <div className="nav-link__text">{link.title}</div>
-                <div className="nav-link__background" />
-              </a>
-            ))}
+        <div className="nav-link__text">
+        <NavLink to="/" exact>Home</NavLink>
+        </div>
+        {isLoggedIn ? null :
+        <div className="nav-link__text">
+        <NavLink to="/login" exact>Login</NavLink>
+        </div>
+        }
+        {isLoggedIn ? null :
+        <div className="nav-link__text">
+        <NavLink to="/signup" exact>Signup</NavLink>
+        </div>
+        }
+        {!isLoggedIn ? null :
+        <div className="nav-link__text">
+        <NavLink to="/" onClick={handle_logout} exact>Logout</NavLink>
+        </div>
+        }
         </nav>
-
         <div className="nav-menu__icon" onClick={() => setMenuOpen(!menuOpen)}>
           <div />
           <div />
@@ -34,16 +50,6 @@ function Navbar({ links }) {
     </div>
   );
 }
-
-Navbar.defaultProps = {
-    links: [
-      { title: "Home", href: "#home" },
-      { title: "Features", href: "#features" },
-      { title: "Services", href: "#services" },
-      { title: "Pricing", href: "#pricing" },
-      { title: "Contact", href: "#contact" }
-    ]
-  };
   
   export default Navbar;
   

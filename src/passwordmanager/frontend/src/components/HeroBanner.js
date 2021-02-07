@@ -5,16 +5,16 @@ function HeroBanner() {
     <section id="home">
       <div className="container">
         <div className="home-text">
-          <div className="section-text__subtitle">App landing page</div>
+          <div className="section-text__subtitle">Keep your passwords safe</div>
           <div className="section-text__title-big">
-            Get things done with Anapp
+          Keep your passwords safe with Password Manager
           </div>
           <div className="section-text__body">
             Dorem ipsum dolor sitamet, consectetur adipiscing elit, sed do eiusm
             tempor incididunt ulabore et dolore magna aliqua.
           </div>
           <a href="#download" className="download-btn">
-            Download App
+            Get started
           </a>
         </div>
 
