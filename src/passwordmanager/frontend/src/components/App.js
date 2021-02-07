@@ -8,7 +8,7 @@ import Login from "./Login";
 import HomePage from "./HomePage";
 import Navbar from "./Navbar";
 import SignUp from "./SignUp";
-
+import WebsitePasswordList from "./WebsitePasswordList";
 
 
 const DecisionRoute = ( {trueComponent, falseComponent, decisionFunc, ...rest} ) => {
@@ -58,6 +58,7 @@ export default class App extends Component {
                 <Switch>
                     <Route exact path="/" component={HomePage} />
                     <DecisionRoute path='/create' trueComponent={CreateWebsitePassword} falseComponent={HomePage} decisionFunc={ () => this.state.isLoggedIn}/>
+                    <DecisionRoute path='/list' trueComponent={WebsitePasswordList} falseComponent={HomePage} decisionFunc={ () => this.state.isLoggedIn}/>
                     <Route path='/login' render={(props) => <Login {...props} setLogin={this.setLogin} />}/>
                     <Route path='/signup' component={SignUp}/>
                 </Switch>
