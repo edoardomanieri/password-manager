@@ -1,15 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.models import User
-from django.urls import reverse
-from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from rest_framework.generics import (
-    ListCreateAPIView,
+    CreateAPIView, ListCreateAPIView,
 )
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
 
-from .serializers import CreateWebsitePasswordSerializer, WebsitePasswordSerializer
+from .serializers import CreateWebsitePasswordSerializer, WebsitePasswordSerializer, MasterPasswordSerializer
 from .models import WebsitePassword
 from .encryption import decrypt
 
@@ -35,24 +32,27 @@ class WebsitePasswordCreateView(ListCreateAPIView):
 
     
     def list(self, request):
-        # Note the use of `get_queryset()` instead of `self.queryset`
         queryset = self.get_queryset()
         serializer = WebsitePasswordSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
-## ajax function view
-def get_decrypted_password(request, *args, **kwargs):
-    master_password = request.POST['master_password']
-    is_password_wrong = not request.user.check_password(master_password)
-    id_ = kwargs.get("id")
-    encrypted_password = get_object_or_404(WebsitePassword, id=id_).password
-    plain_password = "" if is_password_wrong else decrypt(encrypted_password, master_password)
-    data = {
-        'is_password_wrong': is_password_wrong,
-        'plain_password': plain_password
-    }
-    return JsonResponse(data)
+class GetDecryptedPasswordView(CreateAPIView):
+    serializer_class = MasterPasswordSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            master_password = serializer.data['master_password']
+            encrypted_password = serializer.data['encrypted_password']
+            plain_password = decrypt(encrypted_password, master_password)
+            data = {
+                'plain_password': plain_password
+            }
+            return Response(data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
     
 

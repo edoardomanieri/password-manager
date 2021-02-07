@@ -41,6 +41,16 @@ function Navbar({ isLoggedIn, setLogin }) {
         <NavLink to="/" onClick={handle_logout} exact>Logout</NavLink>
         </div>
         }
+        {!isLoggedIn ? null :
+        <div className="nav-link__text">
+        <NavLink to="/list" exact>Passwords</NavLink>
+        </div>
+        }
+        {!isLoggedIn ? null :
+        <div className="nav-link__text">
+        <NavLink to="/create" exact>Add new password</NavLink>
+        </div>
+        }
         </nav>
         <div className="nav-menu__icon" onClick={() => setMenuOpen(!menuOpen)}>
           <div />

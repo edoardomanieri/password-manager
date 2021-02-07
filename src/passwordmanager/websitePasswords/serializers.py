@@ -4,6 +4,19 @@ from .models import WebsitePassword
 from .encryption import encrypt
 
 # we will use this to send a response back to the browser
+class MasterPasswordSerializer(serializers.Serializer):
+    master_password = serializers.CharField(max_length=100)
+    encrypted_password = serializers.CharField(max_length=10000)
+
+
+    def validate_master_password(self, value):
+        user = self.context['request'].user
+        if not user.check_password(value):	
+           raise serializers.ValidationError("Wrong Master Password") 
+        return value
+
+
+# we will use this to send a response back to the browser
 class WebsitePasswordSerializer(serializers.ModelSerializer):
 
     class Meta:

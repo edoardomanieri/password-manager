@@ -58,8 +58,8 @@ export default class App extends Component {
                 <Navbar isLoggedIn={this.state.isLoggedIn} setLogin={this.setLogin}/>
                 <Switch>
                     <Route exact path="/" component={HomePage} />
-                    <DecisionRoute path='/create' trueComponent={CreateWebsitePassword} falseComponent={HomePage} decisionFunc={ () => this.state.isLoggedIn}/>
-                    <DecisionRoute path='/list' trueComponent={WebsitePasswordList} falseComponent={HomePage} decisionFunc={ () => this.state.isLoggedIn}/>
+                    <Route path='/create' component={CreateWebsitePassword} />
+                    <Route path='/list' component={WebsitePasswordList}/>
                     <Route path='/login' render={(props) => <Login {...props} setLogin={this.setLogin} />}/>
                     <Route path='/signup' component={SignUp}/>
                     <Route path='/:user/:website_name' component={WebsitePasswordDetail}/>

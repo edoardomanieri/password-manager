@@ -50,7 +50,7 @@ function ObjectRow( {object, paper} ) {
                 website_name: object.website_name,
                 website_url: object.website_url,
                 username: object.username,
-                password: object.password,
+                encryptedPassword: object.password,
                 notes: object.notes
             }
         }}>
