@@ -128,41 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Custom
-keys.json
-
 #### node
-
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@edoardomanieri 
-github
-/
-gitignore
-3.2k
-114k61.8k
-Code
-Pull requests
-267
-Actions
-Projects
-Security
-Insights
-gitignore/Node.gitignore
-@ch4ot1c
-ch4ot1c Add .yarn/install-state.gz to Node.gitignore (#3407)
-…
-Latest commit 7293c14 on 14 May 2020
- History
- 58 contributors
-@stuartpb@shiftkey@SimonSiefke@TennyZhuang@venatoria@ro31337@Richienb@melonmanchan@gouthamve@jucrouzet@cheddar@arcresu
-116 lines (86 sloc)  1.77 KB
   
 # Logs
 logs
@@ -280,3 +246,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+# Custom
+keys.json
+static/
