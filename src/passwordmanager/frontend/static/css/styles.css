@@ -97,6 +97,7 @@ section > .container > * {
 }
 
 .section-image {
+  max-width: 600px;
   height: calc(100vh - 130px);
 }
 .section-image__small {
