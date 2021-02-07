@@ -30,23 +30,21 @@ export default function WebsitePasswordCard( {websitePassword} ) {
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          {websitePassword.website_url}
+        <Typography variant="h5" component="h2" gutterBottom>
+          Website name: {websitePassword.website_name}
         </Typography>
         <Typography variant="h5" component="h2">
-          be{bull}nev{bull}o{bull}lent
+          Website url: {websitePassword.website_url}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
+        <Typography variant="h5" component="h2" gutterBottom>
+          Username: {websitePassword.username}
         </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+        <Typography variant="h5" component="h2" gutterBottom>
+          Notes: {websitePassword.notes}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small">Show password</Button>
       </CardActions>
     </Card>
   );

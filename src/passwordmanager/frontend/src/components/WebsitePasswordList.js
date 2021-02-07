@@ -1,9 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import WebsitePasswordCard from "./WebsitePasswordCard";
+import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from "@material-ui/core/Box"
+import Paper from "@material-ui/core/Paper"
+import Grid from '@material-ui/core/Grid';
+import Button from "@material-ui/core/Button"
 import Axios from 'axios';
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      height: '100vh',
+    },
+    image: {
+      backgroundImage: 'url(https://source.unsplash.com/random)',
+      backgroundRepeat: 'no-repeat',
+      backgroundColor:
+        theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+      },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
+
+
+function ObjectRow( {object, paper} ) {
+    return (
+        <Grid item xs>
+        <Paper className={paper}>
+          <Button variant="contained" color="primary">
+          {object.website_name}
+        </Button>
+        </Paper>
+        </Grid>
+    );
+  }
+
+
 
 export default function WebsitePasswordList() {
 
+    const classes = useStyles();
     const [websitePasswords, setWebsitePasswords] = useState([ {
         id: 1,
         user: "",
@@ -22,9 +75,7 @@ export default function WebsitePasswordList() {
         }
         )
         .then(resp => {
-            console.log(resp.data);
             setWebsitePasswords(e => [...resp.data]);
-            
          })
     }
 
@@ -33,6 +84,15 @@ export default function WebsitePasswordList() {
         fetchData();
       }, []);
 
-    return <WebsitePasswordCard websitePassword={websitePasswords[0]} />;
+    return (
+    <div className={classes.root}>
+      <Grid container spacing={3}>
 
+        { websitePasswords.map((object, index) => 
+            <ObjectRow object={object} paper={classes.paper} />
+        )}
+        
+      </Grid>
+    </div>
+    );
 }
