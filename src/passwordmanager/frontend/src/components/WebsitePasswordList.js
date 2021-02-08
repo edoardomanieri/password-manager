@@ -25,9 +25,13 @@ const useStyles = makeStyles((theme) => ({
       backgroundPosition: 'center',
     },
     paper: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(3),
         textAlign: 'center',
+        height: 140,
         color: theme.palette.text.secondary,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center"
       },
     avatar: {
       margin: theme.spacing(1),
@@ -45,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ObjectRow( {object, paper} ) {
     return (
-        <Grid item xs>
+        <Grid item xs={6}>
         <Paper className={paper}>
         <Link to={{
             pathname:`/${object.user}/${object.website_name}`,
@@ -105,8 +109,8 @@ export default function WebsitePasswordList() {
 
     return (
     <div className={classes.root}>
+      <input class="input-field" type="text" placeholder="Search Website" />
       <Grid container spacing={3}>
-
         { websitePasswords.map((object, index) => 
             <ObjectRow object={object} paper={classes.paper} />
         )}
