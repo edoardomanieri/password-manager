@@ -28,21 +28,21 @@ function Navbar({ isLoggedIn, setLogin }) {
 
         <nav className="nav-links__container">
         <div className="nav-link__text">
-        <NavLink to="/" exact>Home</NavLink>
+        <NavLink to="/" style={{ textDecoration: 'none'}} exact>Home</NavLink>
         </div>
         {isLoggedIn ? null :
         <div className="nav-link__text">
-        <NavLink to="/login" exact>Login</NavLink>
+        <NavLink to="/login" style={{ textDecoration: 'none'}} exact>Login</NavLink>
         </div>
         }
         {isLoggedIn ? null :
         <div className="nav-link__text">
-        <NavLink to="/signup" exact>Signup</NavLink>
+        <NavLink to="/signup" style={{ textDecoration: 'none'}} exact>Signup</NavLink>
         </div>
         }
         {!isLoggedIn ? null :
         <div className="nav-link__text">
-        <NavLink to="/list" exact>Passwords</NavLink>
+        <NavLink to="/list" exact style={{ textDecoration: 'none'}}>Passwords</NavLink>
         </div>
         }
         {!isLoggedIn ? null :
