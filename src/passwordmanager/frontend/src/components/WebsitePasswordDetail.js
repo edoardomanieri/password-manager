@@ -49,9 +49,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function WebsitePasswordDetail(props) {
   const [open, setOpen] = useState(false);
-  const [showButton, setShowButton] = useState(true);
+  const [isPasswordPlain, setIsPasswordPlain] = useState(false);
   const [masterPassword, setMasterPassword] = useState("");
-  const [plainPassword, setPlainPassword] = useState("*******");
+  const [plainPassword, setPlainPassword] = useState("**********");
   const classes = useStyles();
   const { website_name } = props.match.params;
   const { website_url } = props.location.state;
@@ -62,7 +62,8 @@ export default function WebsitePasswordDetail(props) {
 
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if (!isPasswordPlain)
+      setOpen(true);
   };
 
   const handleClose = () => {
@@ -86,7 +87,7 @@ export default function WebsitePasswordDetail(props) {
   )
   .then(response => {
     setPlainPassword(response.data.plain_password);
-    setShowButton(false);
+    setIsPasswordPlain(true);
   })
   .catch(error => alert(error));
 }

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useScrollYPosition } from "react-use-scroll-position";
 import { NavLink } from "react-router-dom"
+import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 import '../../static/css/Navbar.css';
 
 function Navbar({ isLoggedIn, setLogin }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const history = useHistory();
   const scrollY = useScrollYPosition();
 
   const stickeyTrigger = window.innerHeight / 2.75;
@@ -12,6 +15,7 @@ function Navbar({ isLoggedIn, setLogin }) {
   function handle_logout() {
     localStorage.removeItem('token');
     setLogin();
+    history.push("/");
   };
 
   return (
@@ -38,17 +42,12 @@ function Navbar({ isLoggedIn, setLogin }) {
         }
         {!isLoggedIn ? null :
         <div className="nav-link__text">
-        <NavLink to="/" onClick={handle_logout} exact>Logout</NavLink>
-        </div>
-        }
-        {!isLoggedIn ? null :
-        <div className="nav-link__text">
         <NavLink to="/list" exact>Passwords</NavLink>
         </div>
         }
         {!isLoggedIn ? null :
         <div className="nav-link__text">
-        <NavLink to="/create" exact>Add new password</NavLink>
+        <Button onClick={handle_logout} >Logout</Button>
         </div>
         }
         </nav>

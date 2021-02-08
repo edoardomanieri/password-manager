@@ -25,30 +25,14 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: localStorage.getItem('token') ? true : false,
-            username: ''
+            isLoggedIn: localStorage.getItem('token') ? true : false
           };
         this.setLogin = this.setLogin.bind(this);
     }
 
-    // componentDidMount() {
-    //     if (this.state.logged_in) {
-    //       fetch('/accounts/current_user/', {
-    //         headers: {
-    //           Authorization: `JWT ${localStorage.getItem('token')}`
-    //         }
-    //       })
-    //         .then(res => res.json())
-    //         .then(json => {
-    //           this.setState({ username: json.username });
-    //         });
-    //     }
-    //   }
-
     setLogin = () => {
         this.setState({ 
-            isLoggedIn: localStorage.getItem('token') ? true : false,
-            username: ''
+            isLoggedIn: localStorage.getItem('token') ? true : false
         })
     }
 

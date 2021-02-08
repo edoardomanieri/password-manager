@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Box from "@material-ui/core/Box"
+import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper"
 import Grid from '@material-ui/core/Grid';
-import Button from "@material-ui/core/Button"
+import Button from "@material-ui/core/Button";
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
+import { useHistory } from "react-router-dom";
 import Axios from 'axios';
 
 
@@ -68,6 +71,7 @@ function ObjectRow( {object, paper} ) {
 export default function WebsitePasswordList() {
 
     const classes = useStyles();
+    const history = useHistory();
     const [websitePasswords, setWebsitePasswords] = useState([ {
         id: 1,
         user: "",
@@ -95,6 +99,10 @@ export default function WebsitePasswordList() {
         fetchData();
       }, []);
 
+    const handleClick = () => {
+        history.push("/create");
+      }
+
     return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -102,8 +110,10 @@ export default function WebsitePasswordList() {
         { websitePasswords.map((object, index) => 
             <ObjectRow object={object} paper={classes.paper} />
         )}
-        
       </Grid>
+      <IconButton style={{ fontSize: 80, position:"absolute", bottom:30, right:5 }} onClick={handleClick}>
+      <Icon style={{ fontSize: 80 }} color="primary">add_circle</Icon>
+      </IconButton>
     </div>
     );
 }
