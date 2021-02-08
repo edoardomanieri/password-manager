@@ -25,7 +25,7 @@ function Navbar({ isLoggedIn, setLogin }) {
         menuOpen ? " nav-open" : ""
       }`}>
       <div className="nav-content">
-        <div className="nav-logo">SafePass</div>
+        <div className="nav-logo">BetterPass</div>
 
         <nav className="nav-links__container">
         <div className="nav-link__text">

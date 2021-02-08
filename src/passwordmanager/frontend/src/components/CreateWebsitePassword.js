@@ -174,7 +174,6 @@ export default function CreateWebsitePassword() {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 multiline
                 label="Notes"

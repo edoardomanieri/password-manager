@@ -5,11 +5,11 @@ import { render } from "react-dom";
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import CreateWebsitePassword from "./CreateWebsitePassword";
 import Login from "./Login";
-import HomePage from "./HomePage";
 import Navbar from "./Navbar";
 import SignUp from "./SignUp";
 import WebsitePasswordList from "./WebsitePasswordList";
 import WebsitePasswordDetail from "./WebsitePasswordDetail";
+import HeroBanner from "./HeroBanner";
 
 
 const DecisionRoute = ( {trueComponent, falseComponent, decisionFunc, ...rest} ) => {
@@ -41,7 +41,7 @@ export default class App extends Component {
             <Router>
                 <Navbar isLoggedIn={this.state.isLoggedIn} setLogin={this.setLogin}/>
                 <Switch>
-                    <Route exact path="/" component={HomePage} />
+                    <Route exact path="/" render={(props) => <HeroBanner {...props} isLoggedIn={this.state.isLoggedIn} />}/>
                     <Route path='/create' component={CreateWebsitePassword} />
                     <Route path='/list' component={WebsitePasswordList}/>
                     <Route path='/login' render={(props) => <Login {...props} setLogin={this.setLogin} />}/>

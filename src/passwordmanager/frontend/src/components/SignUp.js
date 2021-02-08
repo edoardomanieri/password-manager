@@ -134,6 +134,17 @@ export default function SignUp() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password2"
+                label="Repeat Password"
+                type="password"
+                id="password2"
+                autoComplete="second-password"
+              />
           <Button
             type="button"
             fullWidth
