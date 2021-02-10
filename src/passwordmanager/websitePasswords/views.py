@@ -55,11 +55,13 @@ class GetDecryptedPasswordView(CreateAPIView):
 
 class WebsitePasswordUpdateView(UpdateAPIView):
     serializer_class = CreateWebsitePasswordSerializer
-    queryset = WebsitePassword.objects.all()
     permission_classes = [permissions.IsAuthenticated]
 
+        
     def update(self, request, *args,  **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        id = self.kwargs.get('pk')
+        old_instance = WebsitePassword.objects.get(id=id)
+        serializer = self.get_serializer(old_instance, data=request.data)
         if serializer.is_valid():
             websitePassword = serializer.save()
             # response not important since it is a put method (but still have to override to specify the right Serializer (without master password))

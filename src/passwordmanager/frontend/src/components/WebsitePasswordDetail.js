@@ -56,11 +56,17 @@ export default function WebsitePasswordDetail(props) {
   const classes = useStyles();
 
   const { id } = props.location.state;
-  const { website_name } = props.match.params;
-  const { website_url } = props.location.state;
-  const { username } = props.location.state;
+  const { website_name_current } = props.location.state;
+  const { website_url_current } = props.location.state;
+  const { username_current } = props.location.state;
   const { encryptedPassword } = props.location.state;
-  const { notes } = props.location.state;
+  const { notes_current } = props.location.state;
+
+  const [websiteName, setWebsiteName] = useState(website_name_current);
+  const [websiteURL, setWebsiteURL] = useState(website_url_current);
+  const [username, setUsername] = useState(username_current);
+  const [notes, setNotes] = useState(notes_current);
+
   const csrfToken = Cookies.get('csrftoken');
 
 
@@ -75,7 +81,7 @@ export default function WebsitePasswordDetail(props) {
 
   const handleEnteredPassword = () => {
     setOpenShow(false);
-    Axios.post("/websitepasswords/get-password/",
+    return Axios.post("/websitepasswords/get-password/",
     {
       'master_password': masterPassword,
       'encrypted_password': encryptedPassword
@@ -105,12 +111,17 @@ const handleCloseUpdate = () => {
 };
 
 
-const handleUpdate = () => {
+async function handleUpdate()  {
   setOpenUpdate(false);
+
+  if (!isPasswordPlain){
+    let response = await handleEnteredPassword();
+  }
+
   Axios.put(`/websitepasswords/update-website-password/${id}`,
   {
-    'website_url': website_url,
-    'website_name': website_name,
+    'website_url': websiteURL,
+    'website_name': websiteName,
     'username': username,
     'password': plainPassword,
     'notes': notes,
@@ -139,7 +150,7 @@ const ButtonDialogUpdate = () => {
     <DialogTitle id="form-dialog-title">Update Details</DialogTitle>
     <DialogContent>
       <DialogContentText>
-        To update the details for this website, please enter your master password here.
+        To update the details for this website and show the password, please enter your master password here.
       </DialogContentText>
       <TextField
         autoFocus
@@ -213,47 +224,50 @@ const ButtonDialogShow = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          {website_name} Details
+          Website Details
         </Typography>
         <form className={classes.form} noValidate>
         <TextField
           id="webname"
           label="Website Name"
           margin="normal"
-          defaultValue={website_name}
+          value={websiteName}
           fullWidth
           variant="outlined"
+          onChange={(e) => setWebsiteName(e.target.value)}
         />
         <TextField
           id="weburl"
           label="Website URL"
           margin="normal"
-          defaultValue={website_url}
+          value={websiteURL}
           fullWidth
           variant="outlined"
+          onChange={(e) => setWebsiteURL(e.target.value)}
         />
         <TextField
           id="username"
           label="Username"
           margin="normal"
-          defaultValue={username}
+          value={username}
           fullWidth
           variant="outlined"
+          onChange={(e) => setUsername(e.target.value)}
         />
           <TextField
           id="notes"
           label="Notes"
           margin="normal"
           multiline
-          defaultValue={notes}
+          value={notes}
           fullWidth
           variant="outlined"
+          onChange={(e) => setNotes(e.target.value)}
         />
           <TextField
           id="psw"
           label="Password"
           margin="normal"
-          multiline
           value={plainPassword}
           fullWidth
           variant="outlined"

@@ -67,14 +67,13 @@ class CreateWebsitePasswordSerializer(serializers.ModelSerializer):
         instance.website_name = validated_data.get('website_name', instance.website_name)
         instance.username = validated_data.get('username', instance.username)
         instance.notes = validated_data.get('notes', instance.notes)
-        instance.user = user = str(self.context['request'].user)
-        
+
         # encrypt password
         password = validated_data.get('password')
         master_password = validated_data.pop('master_password')
         encrypted_password = encrypt(password, master_password)
         validated_data['password'] = encrypted_password
         instance.password = validated_data.get('password', instance.password)
-
+        print(instance.website_name)
         instance.save()
         return instance

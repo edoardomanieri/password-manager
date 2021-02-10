@@ -53,11 +53,11 @@ function ObjectRow( {object, paper} ) {
             pathname:`/${object.user}/${object.website_name}`,
             state: {
                 id: object.id,
-                website_name: object.website_name,
-                website_url: object.website_url,
-                username: object.username,
+                website_name_current: object.website_name,
+                website_url_current: object.website_url,
+                username_current: object.username,
                 encryptedPassword: object.password,
-                notes: object.notes
+                notes_current: object.notes
             }
         }}>
           <Button variant="contained" color="primary">
