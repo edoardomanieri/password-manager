@@ -48,11 +48,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function WebsitePasswordDetail(props) {
-  const [open, setOpen] = useState(false);
+  const [openShow, setOpenShow] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
   const [isPasswordPlain, setIsPasswordPlain] = useState(false);
   const [masterPassword, setMasterPassword] = useState("");
   const [plainPassword, setPlainPassword] = useState("**********");
   const classes = useStyles();
+
+  const { id } = props.location.state;
   const { website_name } = props.match.params;
   const { website_url } = props.location.state;
   const { username } = props.location.state;
@@ -61,17 +64,17 @@ export default function WebsitePasswordDetail(props) {
   const csrfToken = Cookies.get('csrftoken');
 
 
-  const handleClickOpen = () => {
+  const handleClickOpenShow = () => {
     if (!isPasswordPlain)
-      setOpen(true);
+      setOpenShow(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseShow = () => {
+    setOpenShow(false);
   };
 
   const handleEnteredPassword = () => {
-    setOpen(false);
+    setOpenShow(false);
     Axios.post("/websitepasswords/get-password/",
     {
       'master_password': masterPassword,
@@ -92,18 +95,51 @@ export default function WebsitePasswordDetail(props) {
   .catch(error => alert(error));
 }
 
+const handleClickOpenUpdate = () => {
+  if (!isPasswordPlain)
+    setOpenUpdate(true);
+};
 
-const ButtonDialog = () => {
+const handleCloseUpdate = () => {
+  setOpenUpdate(false);
+};
+
+
+const handleUpdate = () => {
+  setOpenUpdate(false);
+  Axios.put(`/websitepasswords/update-website-password/${id}`,
+  {
+    'website_url': website_url,
+    'website_name': website_name,
+    'username': username,
+    'password': plainPassword,
+    'notes': notes,
+    'master_password': masterPassword
+  },
+  {
+    headers: {
+            Authorization: `JWT ${localStorage.getItem('token')}`,
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken
+        }
+}
+)
+.then(response => console.log("ok"))
+.catch(error => alert(error));
+}
+
+
+const ButtonDialogUpdate = () => {
   return (
     <div>
-    <Button className={classes.submit} type="button" variant="contained" fullWidth color="primary" onClick={handleClickOpen}>
-    Show Password
+    <Button className={classes.submit} type="button" variant="contained" fullWidth color="primary" onClick={handleClickOpenUpdate}>
+    update details
   </Button>
-  <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-    <DialogTitle id="form-dialog-title">Show Password</DialogTitle>
+  <Dialog open={openUpdate} onClose={handleCloseUpdate} aria-labelledby="form-dialog-title">
+    <DialogTitle id="form-dialog-title">Update Details</DialogTitle>
     <DialogContent>
       <DialogContentText>
-        To show the password for this website, please enter your email master password here.
+        To update the details for this website, please enter your master password here.
       </DialogContentText>
       <TextField
         autoFocus
@@ -117,7 +153,44 @@ const ButtonDialog = () => {
       />
     </DialogContent>
     <DialogActions>
-      <Button onClick={handleClose} color="primary">
+      <Button onClick={handleCloseUpdate} color="primary">
+        Cancel
+      </Button>
+      <Button onClick={handleUpdate} color="primary">
+        Update
+      </Button>
+    </DialogActions>
+  </Dialog>
+  </div>
+  )
+}
+
+
+const ButtonDialogShow = () => {
+  return (
+    <div>
+    <Button className={classes.submit} type="button" variant="contained" fullWidth color="primary" onClick={handleClickOpenShow}>
+    Show Password
+  </Button>
+  <Dialog open={openShow} onClose={handleCloseShow} aria-labelledby="form-dialog-title">
+    <DialogTitle id="form-dialog-title">Show Password</DialogTitle>
+    <DialogContent>
+      <DialogContentText>
+        To show the password for this website, please enter your master password here.
+      </DialogContentText>
+      <TextField
+        autoFocus
+        margin="dense"
+        id="name"
+        label="Master Password"
+        type="password"
+        fullWidth
+        value={masterPassword}
+        onChange={(e) => setMasterPassword(e.target.value)}
+      />
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={handleCloseShow} color="primary">
         Cancel
       </Button>
       <Button onClick={handleEnteredPassword} color="primary">
@@ -144,63 +217,49 @@ const ButtonDialog = () => {
         </Typography>
         <form className={classes.form} noValidate>
         <TextField
-          id="outlined-read-only-input"
+          id="webname"
           label="Website Name"
           margin="normal"
           defaultValue={website_name}
           fullWidth
-          InputProps={{
-            readOnly: true,
-          }}
           variant="outlined"
         />
         <TextField
-          id="outlined-read-only-input"
+          id="weburl"
           label="Website URL"
           margin="normal"
           defaultValue={website_url}
           fullWidth
-          InputProps={{
-            readOnly: true,
-          }}
           variant="outlined"
         />
         <TextField
-          id="outlined-read-only-input"
+          id="username"
           label="Username"
           margin="normal"
           defaultValue={username}
           fullWidth
-          InputProps={{
-            readOnly: true,
-          }}
           variant="outlined"
         />
           <TextField
-          id="outlined-read-only-input"
+          id="notes"
           label="Notes"
           margin="normal"
           multiline
           defaultValue={notes}
           fullWidth
-          InputProps={{
-            readOnly: true,
-          }}
           variant="outlined"
         />
           <TextField
-          id="outlined-read-only-input"
+          id="psw"
           label="Password"
           margin="normal"
           multiline
           value={plainPassword}
           fullWidth
-          InputProps={{
-            readOnly: true,
-          }}
           variant="outlined"
         />
-        <ButtonDialog />
+        <ButtonDialogShow />
+        <ButtonDialogUpdate />
         </form>
       </div>
       </Grid>

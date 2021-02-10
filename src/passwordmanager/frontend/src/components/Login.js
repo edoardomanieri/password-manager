@@ -20,7 +20,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        BetterPass
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -108,7 +108,7 @@ export default function Login({ setLogin }) {
               required
               fullWidth
               id="username"
-              label="username"
+              label="Username"
               name="username"
               autoComplete="username"
               value={username}

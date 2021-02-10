@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper"
 import Grid from '@material-ui/core/Grid';
 import Button from "@material-ui/core/Button";
@@ -54,6 +52,7 @@ function ObjectRow( {object, paper} ) {
         <Link to={{
             pathname:`/${object.user}/${object.website_name}`,
             state: {
+                id: object.id,
                 website_name: object.website_name,
                 website_url: object.website_url,
                 username: object.username,

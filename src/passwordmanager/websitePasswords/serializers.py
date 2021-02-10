@@ -46,11 +46,6 @@ class CreateWebsitePasswordSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         if not user.check_password(master_password):	
            raise serializers.ValidationError("Wrong Master Password") 	
-        password = data.get('password')	
-        if len(password) < 4:	
-            raise serializers.ValidationError("Password must be at least 4 character long")	
-        encrypted_password = encrypt(password, master_password)
-        data['password'] = encrypted_password
         return data
 
 
@@ -58,5 +53,28 @@ class CreateWebsitePasswordSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = str(self.context['request'].user)
         master_password = validated_data.pop('master_password')
+
+        password = validated_data.get('password')
+        encrypted_password = encrypt(password, master_password)
+        validated_data['password'] = encrypted_password
+
         data = {**validated_data, 'user': user}
         return WebsitePassword.objects.create(**data)
+
+
+    def update(self, instance, validated_data):
+        instance.website_url = validated_data.get('website_url', instance.website_url)
+        instance.website_name = validated_data.get('website_name', instance.website_name)
+        instance.username = validated_data.get('username', instance.username)
+        instance.notes = validated_data.get('notes', instance.notes)
+        instance.user = user = str(self.context['request'].user)
+        
+        # encrypt password
+        password = validated_data.get('password')
+        master_password = validated_data.pop('master_password')
+        encrypted_password = encrypt(password, master_password)
+        validated_data['password'] = encrypted_password
+        instance.password = validated_data.get('password', instance.password)
+
+        instance.save()
+        return instance
