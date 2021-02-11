@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Axios from 'axios';
+import axios from 'axios';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -79,9 +79,10 @@ export default function WebsitePasswordDetail(props) {
     setOpenShow(false);
   };
 
+
   const handleEnteredPassword = () => {
     setOpenShow(false);
-    return Axios.post("/websitepasswords/get-password/",
+    axios.post("/websitepasswords/get-password/",
     {
       'master_password': masterPassword,
       'encrypted_password': encryptedPassword
@@ -101,8 +102,23 @@ export default function WebsitePasswordDetail(props) {
   .catch(error => alert(error));
 }
 
+const getPlainPasswordPromise = () => {
+    return axios.post("/websitepasswords/get-password/",
+    {
+      'master_password': masterPassword,
+      'encrypted_password': encryptedPassword
+    },
+    {
+      headers: {
+              Authorization: `JWT ${localStorage.getItem('token')}`,
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken
+          }
+  }
+  );
+}
+
 const handleClickOpenUpdate = () => {
-  if (!isPasswordPlain)
     setOpenUpdate(true);
 };
 
@@ -113,17 +129,16 @@ const handleCloseUpdate = () => {
 
 async function handleUpdate()  {
   setOpenUpdate(false);
+  const response = await getPlainPasswordPromise(); 
+  const { data } = await response;
+  const plainPasswordSync = data.plain_password;
 
-  if (!isPasswordPlain){
-    let response = await handleEnteredPassword();
-  }
-
-  Axios.put(`/websitepasswords/update-website-password/${id}`,
+  axios.put(`/websitepasswords/update-website-password/${id}`,
   {
     'website_url': websiteURL,
     'website_name': websiteName,
     'username': username,
-    'password': plainPassword,
+    'password': plainPasswordSync,
     'notes': notes,
     'master_password': masterPassword
   },
@@ -135,7 +150,7 @@ async function handleUpdate()  {
         }
 }
 )
-.then(response => console.log("ok"))
+.then(resp => console.log("ok"))
 .catch(error => alert(error));
 }
 

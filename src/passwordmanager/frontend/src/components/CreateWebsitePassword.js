@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
 import Axios from 'axios';
 
@@ -52,6 +53,7 @@ export default function CreateWebsitePassword() {
   const [masterPassword, setMasterPassword] = useState("");
   const classes = useStyles();
   const csrfToken = Cookies.get('csrftoken');
+  const history = useHistory();
 
   function handleSubmit(){
       Axios.post("/websitepasswords/create-website-password/",
@@ -71,7 +73,9 @@ export default function CreateWebsitePassword() {
             }
     }
     )
-    .then(response => console.log(response))
+    .then(response => {
+      history.push("/list");
+    })
     .catch(error => alert(error));
 }
 

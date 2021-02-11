@@ -8,67 +8,47 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import { useHistory } from "react-router-dom";
 import Axios from 'axios';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      height: '100vh',
-    },
-    image: {
-      backgroundImage: 'url(https://source.unsplash.com/random)',
-      backgroundRepeat: 'no-repeat',
-      backgroundColor:
-        theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    },
-    paper: {
-        padding: theme.spacing(3),
-        textAlign: 'center',
-        height: 140,
-        color: theme.palette.text.secondary,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center"
-      },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
-  }));
-
-
-function ObjectRow( {object, paper} ) {
-    return (
-        <Grid item xs={6}>
-        <Paper className={paper}>
-        <Link to={{
-            pathname:`/${object.user}/${object.website_name}`,
-            state: {
-                id: object.id,
-                website_name_current: object.website_name,
-                website_url_current: object.website_url,
-                username_current: object.username,
-                encryptedPassword: object.password,
-                notes_current: object.notes
-            }
-        }}>
-          <Button variant="contained" color="primary">
-          {object.website_name}
-        </Button>
-        </Link>
-        </Paper>
-        </Grid>
-    );
-  }
-
+  icon: {
+    marginRight: theme.spacing(2),
+  },
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6),
+  },
+  heroButtons: {
+    marginTop: theme.spacing(4),
+  },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6),
+  },
+}));
 
 
 export default function WebsitePasswordList() {
@@ -106,14 +86,55 @@ export default function WebsitePasswordList() {
         history.push("/create");
       }
 
+    function WebsitePasswordCard ( {object} ){
+        return (
+        <Grid item xs={12} sm={6} md={4}>
+          <Card className={classes.card}>
+          <CardMedia
+            className={classes.cardMedia}
+            image="../../static/images/pass.jpg"
+            title="Image title"
+          />
+          <CardContent className={classes.cardContent}>
+            <Typography gutterBottom variant="h5" component="h2">
+            {object.website_name}
+            </Typography>
+            <Typography>
+              URL: {object.website_url}
+            </Typography>
+          </CardContent>
+          <CardActions>
+          <Link to={{
+                  pathname:`/${object.user}/${object.website_name}`,
+                  state: {
+                      id: object.id,
+                      website_name_current: object.website_name,
+                      website_url_current: object.website_url,
+                      username_current: object.username,
+                      encryptedPassword: object.password,
+                      notes_current: object.notes
+                  }
+              }}>
+            <Button size="small" color="primary">
+              View
+            </Button>
+            </Link>
+          </CardActions>
+        </Card>
+      </Grid>
+        );
+        }
+
     return (
     <div className={classes.root}>
-      <input class="input-field" type="text" placeholder="Search Website" />
-      <Grid container spacing={3}>
-        { websitePasswords.map((object, index) => 
-            <ObjectRow object={object} paper={classes.paper} />
-        )}
-      </Grid>
+      <input class="input-field" type="text" placeholder="Search" />
+      <Container className={classes.cardGrid} maxWidth="md">
+          <Grid container spacing={4}>
+            {websitePasswords.map((object) => (
+              <WebsitePasswordCard object={object} />
+            ))}
+          </Grid>
+        </Container>
       <IconButton style={{ fontSize: 80, position:"absolute", bottom:30, right:5 }} onClick={handleClick}>
       <Icon style={{ fontSize: 80 }} color="primary">add_circle</Icon>
       </IconButton>
