@@ -121,6 +121,7 @@ export default function WebsitePasswordList() {
 
     const classes = useStyles();
     const history = useHistory();
+    const [inputValue, setInputValue] = useState("");
     const [websitePasswords, setWebsitePasswords] = useState([ {
         id: 1,
         user: "",
@@ -153,6 +154,8 @@ export default function WebsitePasswordList() {
     const handleClick = () => {
         history.push("/create");
       }
+
+
 
     function WebsitePasswordCard ( {object} ){
         return (
@@ -194,12 +197,16 @@ export default function WebsitePasswordList() {
         );
         }
 
+    const filteredWebsitePasswords = websitePasswords.filter(websitePassword => {
+          return websitePassword.website_name.toLowerCase().includes(inputValue.toLowerCase())
+        })
+    
     return (
     <div className={classes.root}>
-      <input class="input-field" type="text" placeholder="Search" />
+      <input class="input-field" type="text" placeholder="Search" value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
       <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
-            {websitePasswords.map((object) => (
+            {filteredWebsitePasswords.map((object) => (
               <WebsitePasswordCard object={object} />
             ))}
           </Grid>
