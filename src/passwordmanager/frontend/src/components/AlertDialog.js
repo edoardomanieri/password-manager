@@ -24,7 +24,7 @@ export default function AlertDialog( {handleLogout }) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button variant="outlined" color="inherit" onClick={handleClickOpen}>
         Logout
       </Button>
       <Dialog
@@ -33,7 +33,7 @@ export default function AlertDialog( {handleLogout }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Logout from SafePass"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Logout from BetterPass"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
               Are you sure you want to logout?

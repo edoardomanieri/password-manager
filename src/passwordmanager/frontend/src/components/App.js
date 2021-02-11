@@ -2,11 +2,11 @@ import "../../static/css/styles.css";
 
 import React, { Component } from "react";
 import { render } from "react-dom";
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import CreateWebsitePassword from "./CreateWebsitePassword";
 import Login from "./Login";
-import Navbar from "./Navbar";
 import SignUp from "./SignUp";
+import AppNavBar from "./AppNavBar";
 import WebsitePasswordList from "./WebsitePasswordList";
 import WebsitePasswordDetail from "./WebsitePasswordDetail";
 import HeroBanner from "./HeroBanner";
@@ -39,7 +39,7 @@ export default class App extends Component {
     render() {
         return (
             <Router>
-                <Navbar isLoggedIn={this.state.isLoggedIn} setLogin={this.setLogin}/>
+                <AppNavBar isLoggedIn={this.state.isLoggedIn} setLogin={this.setLogin}/>
                 <Switch>
                     <Route exact path="/" render={(props) => <HeroBanner {...props} isLoggedIn={this.state.isLoggedIn} />}/>
                     <Route path='/create' component={CreateWebsitePassword} />
