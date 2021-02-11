@@ -15,6 +15,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Cookies from 'js-cookie';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,62 +48,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function WebsitePasswordDetail(props) {
-  const [openShow, setOpenShow] = useState(false);
+
+const ButtonDialogUpdate = ( {id, websiteURL, websiteName, username, notes, encryptedPassword, isPasswordChanged, plainPassword} ) => {
+
   const [openUpdate, setOpenUpdate] = useState(false);
-  const [isPasswordPlain, setIsPasswordPlain] = useState(false);
   const [masterPassword, setMasterPassword] = useState("");
-  const [plainPassword, setPlainPassword] = useState("**********");
   const classes = useStyles();
-
-  const { id } = props.location.state;
-  const { website_name_current } = props.location.state;
-  const { website_url_current } = props.location.state;
-  const { username_current } = props.location.state;
-  const { encryptedPassword } = props.location.state;
-  const { notes_current } = props.location.state;
-
-  const [websiteName, setWebsiteName] = useState(website_name_current);
-  const [websiteURL, setWebsiteURL] = useState(website_url_current);
-  const [username, setUsername] = useState(username_current);
-  const [notes, setNotes] = useState(notes_current);
-
+  const history = useHistory();
   const csrfToken = Cookies.get('csrftoken');
 
-
-  const handleClickOpenShow = () => {
-    if (!isPasswordPlain)
-      setOpenShow(true);
+  const handleClickOpenUpdate = () => {
+    setOpenUpdate(true);
   };
 
-  const handleCloseShow = () => {
-    setOpenShow(false);
+  const handleCloseUpdate = () => {
+    setOpenUpdate(false);
   };
 
-
-  const handleEnteredPassword = () => {
-    setOpenShow(false);
-    axios.post("/websitepasswords/get-password/",
-    {
-      'master_password': masterPassword,
-      'encrypted_password': encryptedPassword
-    },
-    {
-      headers: {
-              Authorization: `JWT ${localStorage.getItem('token')}`,
-              "Content-Type": "application/json",
-              "X-CSRFToken": csrfToken
-          }
-  }
-  )
-  .then(response => {
-    setPlainPassword(response.data.plain_password);
-    setIsPasswordPlain(true);
-  })
-  .catch(error => alert(error));
-}
-
-const getPlainPasswordPromise = () => {
+  const getPlainPasswordPromise = () => {
     return axios.post("/websitepasswords/get-password/",
     {
       'master_password': masterPassword,
@@ -118,20 +81,18 @@ const getPlainPasswordPromise = () => {
   );
 }
 
-const handleClickOpenUpdate = () => {
-    setOpenUpdate(true);
-};
-
-const handleCloseUpdate = () => {
-  setOpenUpdate(false);
-};
-
-
 async function handleUpdate()  {
   setOpenUpdate(false);
-  const response = await getPlainPasswordPromise(); 
-  const { data } = await response;
-  const plainPasswordSync = data.plain_password;
+  let plainPasswordSync;
+  // if password has not changed then we need the decrypted password to store data
+  if(!isPasswordChanged){
+    const response = await getPlainPasswordPromise(); 
+    const { data } = await response;
+    plainPasswordSync = data.plain_password;
+  }
+  else {
+    plainPasswordSync = plainPassword;
+  }
 
   axios.put(`/websitepasswords/update-website-password/${id}`,
   {
@@ -150,12 +111,10 @@ async function handleUpdate()  {
         }
 }
 )
-.then(resp => console.log("ok"))
+.then(resp => history.push("/list"))
 .catch(error => alert(error));
 }
 
-
-const ButtonDialogUpdate = () => {
   return (
     <div>
     <Button className={classes.submit} type="button" variant="contained" fullWidth color="primary" onClick={handleClickOpenUpdate}>
@@ -191,8 +150,47 @@ const ButtonDialogUpdate = () => {
   )
 }
 
+const ButtonDialogShow = ( {encryptedPassword, setPlainPassword, isPasswordChanged}) => {
+  const [openShow, setOpenShow] = useState(false);
+  const [masterPassword, setMasterPassword] = useState("");
+  const [isPasswordPlain, setIsPasswordPlain] = useState(false);
+  const csrfToken = Cookies.get('csrftoken');
+  const classes = useStyles();
 
-const ButtonDialogShow = () => {
+
+  const handleClickOpenShow = () => {
+    if (!isPasswordPlain && !isPasswordChanged)
+      setOpenShow(true);
+  };
+
+  const handleCloseShow = () => {
+    setOpenShow(false);
+  };
+
+
+  const handleEnteredPassword = () => {
+    setOpenShow(false);
+    axios.post("/websitepasswords/get-password/",
+    {
+      'master_password': masterPassword,
+      'encrypted_password': encryptedPassword
+    },
+    {
+      headers: {
+              Authorization: `JWT ${localStorage.getItem('token')}`,
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken
+          }
+  }
+  )
+  .then(response => {
+    setPlainPassword(response.data.plain_password);
+    setIsPasswordPlain(true);
+  })
+  .catch(error => alert(error));
+}
+
+
   return (
     <div>
     <Button className={classes.submit} type="button" variant="contained" fullWidth color="primary" onClick={handleClickOpenShow}>
@@ -227,6 +225,24 @@ const ButtonDialogShow = () => {
   </div>
   )
 }
+
+export default function WebsitePasswordDetail(props) {
+
+  const classes = useStyles();
+  const [plainPassword, setPlainPassword] = useState("**********");
+  const [isPasswordChanged, setisPasswordChanged] = useState(false);
+
+  const { id } = props.location.state;
+  const { website_name_current } = props.location.state;
+  const { website_url_current } = props.location.state;
+  const { username_current } = props.location.state;
+  const { encryptedPassword } = props.location.state;
+  const { notes_current } = props.location.state;
+
+  const [websiteName, setWebsiteName] = useState(website_name_current);
+  const [websiteURL, setWebsiteURL] = useState(website_url_current);
+  const [username, setUsername] = useState(username_current);
+  const [notes, setNotes] = useState(notes_current);
 
 
   return (
@@ -286,9 +302,26 @@ const ButtonDialogShow = () => {
           value={plainPassword}
           fullWidth
           variant="outlined"
+          onChange={(e) => {
+            setPlainPassword(e.target.value);
+            setisPasswordChanged(true);
+          }}
         />
-        <ButtonDialogShow />
-        <ButtonDialogUpdate />
+        <ButtonDialogShow 
+        encryptedPassword={encryptedPassword}
+        setPlainPassword={setPlainPassword}
+        isPasswordChanged={isPasswordChanged}
+        />
+        <ButtonDialogUpdate 
+        id={id}
+        websiteURL={websiteURL}
+        websiteName={websiteName}
+        username={username}
+        notes={notes}
+        encryptedPassword={encryptedPassword}
+        isPasswordChanged={isPasswordChanged}
+        plainPassword={plainPassword}
+        />
         </form>
       </div>
       </Grid>
