@@ -11,7 +11,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
+import Cookies from 'js-cookie';
 import Axios from 'axios';
+
 
 function Copyright() {
     return (
@@ -62,6 +64,7 @@ export default function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const csrfToken = Cookies.get('csrftoken');
   const history = useHistory();
 
   function handle_signup() {
@@ -73,7 +76,8 @@ export default function SignUp() {
     },
     {
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "X-CSRFToken": csrfToken
       }
     })
     .then(res => {
