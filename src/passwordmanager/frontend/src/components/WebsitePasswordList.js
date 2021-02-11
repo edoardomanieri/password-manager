@@ -16,6 +16,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Cookies from 'js-cookie';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +57,66 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+function AlertDialog( {fetchData, id} ) {
+  const [open, setOpen] = useState(false);
+  const csrfToken = Cookies.get('csrftoken');
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  
+  const handleCloseAccept = () => {
+    setOpen(false);
+    Axios.delete(`/websitepasswords/delete-website-password/${id}`,
+    {
+      headers: {
+              Authorization: `JWT ${localStorage.getItem('token')}`,
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken
+          },
+          data: {
+
+          }
+  })
+  .then(resp => fetchData())
+  .catch(error => alert(error));
+  };
+
+  const handleCloseReject = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <Button size="small" color="primary" onClick={handleClickOpen}>
+        Delete
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleCloseReject}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Delete website password"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete this element?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseReject} color="primary">
+            No
+          </Button>
+          <Button onClick={handleCloseAccept} color="primary" autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
+
+
 export default function WebsitePasswordList() {
 
     const classes = useStyles();
@@ -69,7 +135,9 @@ export default function WebsitePasswordList() {
     const fetchData = () => {
         Axios.get('/websitepasswords/list',
         {
-            headers: {Authorization: `JWT ${localStorage.getItem('token')}`}
+            headers: {
+              Authorization: `JWT ${localStorage.getItem('token')}`
+            }
         }
         )
         .then(resp => {
@@ -114,11 +182,12 @@ export default function WebsitePasswordList() {
                       encryptedPassword: object.password,
                       notes_current: object.notes
                   }
-              }}>
+              }} style={{ textDecoration: 'none'}}>
             <Button size="small" color="primary">
               View
             </Button>
             </Link>
+            <AlertDialog fetchData={fetchData} id={object.id}/>
           </CardActions>
         </Card>
       </Grid>

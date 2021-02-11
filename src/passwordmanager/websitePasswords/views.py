@@ -1,5 +1,5 @@
 from rest_framework.generics import (
-    CreateAPIView, ListCreateAPIView, UpdateAPIView
+    CreateAPIView, ListCreateAPIView, UpdateAPIView, DestroyAPIView
 )
 from rest_framework.response import Response
 from rest_framework import status
@@ -68,4 +68,19 @@ class WebsitePasswordUpdateView(UpdateAPIView):
             return Response(WebsitePasswordSerializer(websitePassword).data, status=status.HTTP_201_CREATED)
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class WebsitePasswordDeleteView(DestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        id = self.kwargs.get('pk')
+        return WebsitePassword.objects.filter(id=id)
+
+
+    def perform_destroy(self, request, *args,  **kwargs):
+        id = self.kwargs.get('pk')
+        instance = WebsitePassword.objects.get(id=id)
+        instance.delete()
+
 
