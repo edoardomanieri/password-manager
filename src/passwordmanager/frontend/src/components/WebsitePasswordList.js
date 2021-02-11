@@ -135,7 +135,7 @@ export default function WebsitePasswordList() {
             ))}
           </Grid>
         </Container>
-      <IconButton style={{ fontSize: 80, position:"absolute", bottom:30, right:5 }} onClick={handleClick}>
+      <IconButton style={{ fontSize: 80, position:"fixed", bottom:30, right:5 }} onClick={handleClick}>
       <Icon style={{ fontSize: 80 }} color="primary">add_circle</Icon>
       </IconButton>
     </div>

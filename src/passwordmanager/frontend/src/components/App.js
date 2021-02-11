@@ -43,7 +43,9 @@ export default class App extends Component {
                 <Switch>
                     <Route exact path="/" render={(props) => <HeroBanner {...props} isLoggedIn={this.state.isLoggedIn} />}/>
                     <Route path='/create' component={CreateWebsitePassword} />
-                    <Route path='/list' component={WebsitePasswordList}/>
+                    <Route path='/list'>
+                    {this.state.isLoggedIn ? <WebsitePasswordList /> : <Redirect to="/login"/>}
+                    </Route>
                     <Route path='/login' render={(props) => <Login {...props} setLogin={this.setLogin} />}/>
                     <Route path='/signup' component={SignUp}/>
                     <Route path='/:user/:website_name' component={WebsitePasswordDetail}/>
