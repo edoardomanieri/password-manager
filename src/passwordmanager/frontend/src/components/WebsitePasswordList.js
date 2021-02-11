@@ -203,7 +203,7 @@ export default function WebsitePasswordList() {
     
     return (
     <div className={classes.root}>
-      <input class="input-field" type="text" placeholder="Search" value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
+     <input class="input-field" type="text" placeholder="Search" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
       <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
             {filteredWebsitePasswords.map((object) => (
