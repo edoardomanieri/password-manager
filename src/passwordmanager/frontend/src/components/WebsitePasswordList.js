@@ -12,8 +12,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Dialog from '@material-ui/core/Dialog';
@@ -22,6 +21,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Cookies from 'js-cookie';
+import InputAdornment from "@material-ui/core/InputAdornment";
+import SearchIcon from "@material-ui/icons/Search";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -203,7 +204,32 @@ export default function WebsitePasswordList() {
     
     return (
     <div className={classes.root}>
-     <input class="input-field" type="text" placeholder="Search" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+      <div class="fullscreen-bg">
+      <video loop muted autoPlay class="fullscreen-bg__video">
+        <source src="../../static/images/video.mp4" type="video/mp4" />
+        <source src="../../static/images/video.webm" type="video/webm" />
+      </video>
+      </div>
+     <TextField 
+     variant="outlined"
+     placeholder="Search..."
+     value={inputValue} 
+     onChange={(e) => setInputValue(e.target.value)}
+     style={{
+      margin: "2rem",
+      marginLeft: "200px",
+      width: "70%",
+      fontSize: "1.5rem",
+      backgroundColor: '#FFFFFF'
+     }}
+     InputProps={{
+      endAdornment: (
+        <InputAdornment>
+            <SearchIcon />
+        </InputAdornment>
+      )
+    }}
+     />
       <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
             {filteredWebsitePasswords.map((object) => (
