@@ -2,7 +2,7 @@ import React from "react";
 
 function GetStartedButton() {
   return (
-    <a href="/signup" className="download-btn">
+    <a href="/signup" className="download-btn" style={{ textAlign: "center"}}>
     Get started
     </a>
   );
