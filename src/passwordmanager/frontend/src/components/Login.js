@@ -64,6 +64,7 @@ export default function Login({ setLogin }) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorTextPassword, setErrorTextPassword] = useState("");
   const history = useHistory();
   const classes = useStyles();
 
@@ -85,7 +86,9 @@ export default function Login({ setLogin }) {
         setLogin();
         history.push("/");
       })
-    .catch(error => alert(error))
+    .catch(error => {
+      setErrorTextPassword("Wrong username or password");
+    })
   };
 
 
@@ -106,6 +109,8 @@ export default function Login({ setLogin }) {
               variant="outlined"
               margin="normal"
               required
+              error={errorTextPassword.length != 0}
+              helperText={errorTextPassword}
               fullWidth
               id="username"
               label="Username"
@@ -118,6 +123,8 @@ export default function Login({ setLogin }) {
             <TextField
               variant="outlined"
               margin="normal"
+              error={errorTextPassword.length != 0}
+              helperText={errorTextPassword}
               required
               fullWidth
               name="password"
@@ -127,10 +134,6 @@ export default function Login({ setLogin }) {
               autoComplete="current-password"
               value={ password }
               onChange={ e => setPassword(e.target.value) }
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="button"

@@ -51,11 +51,30 @@ export default function CreateWebsitePassword() {
   const [password, setPassword] = useState("");
   const [notes, setNotes] = useState("");
   const [masterPassword, setMasterPassword] = useState("");
+  const [errorTextMasterPassword, setErrorTextMasterPassword] = useState("");
+  const [errorTextWebsiteURL, setErrorTextWebsiteURL] = useState("");
+  
   const classes = useStyles();
   const csrfToken = Cookies.get('csrftoken');
   const history = useHistory();
 
+const validate = () => {
+  if (!websiteURL.includes(".")){
+    setErrorTextWebsiteURL("Not a valid URL");
+    return false;
+  }
+  // otherwise issue with django
+  if(!websiteURL.startsWith("http")){
+    setWebsiteURL("https://".concat(websiteURL));
+  }
+  setErrorTextMasterPassword("");
+  setErrorTextWebsiteURL("");
+  return true;
+}
+
   function handleSubmit(){
+      if (!validate())
+        return;
       Axios.post("/websitepasswords/create-website-password/",
       {
         'website_url': websiteURL,
@@ -76,8 +95,9 @@ export default function CreateWebsitePassword() {
     .then(response => {
       history.push("/list");
     })
-    .catch(error => alert(error));
+    .catch(error => setErrorTextMasterPassword("Wrong Master Password"));
 }
+
 
 
   return (
@@ -99,6 +119,8 @@ export default function CreateWebsitePassword() {
                 autoComplete="fname"
                 name="websiteURL"
                 variant="outlined"
+                error={errorTextWebsiteURL.length != 0}
+                helperText={errorTextWebsiteURL}
                 required
                 fullWidth
                 id="websiteURL"
@@ -149,6 +171,8 @@ export default function CreateWebsitePassword() {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
+                error={errorTextMasterPassword.length != 0}
+                helperText={errorTextMasterPassword}
                 required
                 fullWidth
                 name="masterPassword"

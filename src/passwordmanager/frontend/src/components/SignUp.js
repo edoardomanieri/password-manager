@@ -63,11 +63,36 @@ export default function SignUp() {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [errorTextPassword, setErrorTextPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [errorTextEmail, setErrorTextEmail] = useState("");
   const csrfToken = Cookies.get('csrftoken');
   const history = useHistory();
 
+  const validate = () => {
+    let validation = true;
+    if (password.valueOf() != password2.valueOf()){
+      setErrorTextPassword("Passwords don't match");
+      validation = false;
+    }
+    else {
+      setErrorTextPassword("");
+    }
+    if (!email.includes(".") || !email.includes("@")){
+      setErrorTextEmail("Wrong email format");
+      validation = false;
+    }
+    else{
+      setErrorTextEmail("");
+    }
+    return validation;
+  }
+
   function handle_signup() {
+    if (!validate())
+      return;
+    
     Axios.post('http://127.0.0.1:8000/accounts/users/', 
     {
         'username': username,
@@ -116,6 +141,8 @@ export default function SignUp() {
               <TextField
                 variant="outlined"
                 margin="normal"
+                error={errorTextEmail.length != 0}
+                helperText={errorTextEmail}
                 required
                 fullWidth
                 id="email"
@@ -141,6 +168,8 @@ export default function SignUp() {
               <TextField
                 variant="outlined"
                 margin="normal"
+                error={errorTextPassword.length != 0}
+                helperText={errorTextPassword}
                 required
                 fullWidth
                 name="password2"
@@ -148,6 +177,8 @@ export default function SignUp() {
                 type="password"
                 id="password2"
                 autoComplete="second-password"
+                value={password2}
+                onChange={(e) => setPassword2(e.target.value)}
               />
           <Button
             type="button"

@@ -16,6 +16,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Cookies from 'js-cookie';
 import { useHistory } from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,9 +89,15 @@ async function handleUpdate()  {
   let plainPasswordSync;
   // if password has not changed then we need the decrypted password to store data
   if(!isPasswordChanged){
-    const response = await getPlainPasswordPromise(); 
-    const { data } = await response;
-    plainPasswordSync = data.plain_password;
+    try {
+      const response = await getPlainPasswordPromise(); 
+      const { data } = await response;
+      plainPasswordSync = data.plain_password;
+    }
+    catch(err) {
+      alert("Wrong password");
+      return;
+    }
   }
   else {
     plainPasswordSync = plainPassword;
@@ -112,7 +121,7 @@ async function handleUpdate()  {
 }
 )
 .then(resp => history.push("/list"))
-.catch(error => alert(error));
+.catch(error => alert("Wrong password"));
 }
 
   return (
@@ -187,7 +196,7 @@ const ButtonDialogShow = ( {encryptedPassword, setPlainPassword, isPasswordChang
     setPlainPassword(response.data.plain_password);
     setIsPasswordPlain(true);
   })
-  .catch(error => alert(error));
+  .catch(error => alert("wrong passwrod"));
 }
 
 
@@ -275,6 +284,15 @@ export default function WebsitePasswordDetail(props) {
           fullWidth
           variant="outlined"
           onChange={(e) => setWebsiteURL(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment>
+                <IconButton onClick={()=> window.open(websiteURL, "_blank")}>
+                  <SubdirectoryArrowRightIcon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
         />
         <TextField
           id="username"
