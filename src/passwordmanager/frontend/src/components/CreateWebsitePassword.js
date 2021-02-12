@@ -63,10 +63,6 @@ const validate = () => {
     setErrorTextWebsiteURL("Not a valid URL");
     return false;
   }
-  // otherwise issue with django
-  if(!websiteURL.startsWith("http")){
-    setWebsiteURL("https://".concat(websiteURL));
-  }
   setErrorTextMasterPassword("");
   setErrorTextWebsiteURL("");
   return true;
@@ -75,9 +71,14 @@ const validate = () => {
   function handleSubmit(){
       if (!validate())
         return;
+      let websiteUrlFormatted = websiteURL;
+      if(!websiteUrlFormatted.startsWith("http")){
+          websiteUrlFormatted = "https://".concat(websiteUrlFormatted);
+          setWebsiteURL(websiteUrlFormatted);
+        }
       Axios.post("/websitepasswords/create-website-password/",
       {
-        'website_url': websiteURL,
+        'website_url': websiteUrlFormatted,
         'website_name': websiteName,
         'username': username,
         'password': password,
@@ -110,7 +111,7 @@ const validate = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Save new password
+          Save New Password
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>

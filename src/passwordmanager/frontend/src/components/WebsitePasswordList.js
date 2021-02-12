@@ -164,7 +164,7 @@ export default function WebsitePasswordList() {
           <Card className={classes.card}>
           <CardMedia
             className={classes.cardMedia}
-            image="../../static/images/pass.jpg"
+            image="../../static/images/safeapp.jpg"
             title="Image title"
           />
           <CardContent className={classes.cardContent}>
