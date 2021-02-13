@@ -8,6 +8,7 @@ from rest_framework import permissions
 from .serializers import CreateWebsitePasswordSerializer, WebsitePasswordSerializer, MasterPasswordSerializer
 from .models import WebsitePassword
 from .encryption import decrypt
+import logging
 
 
 # Create your views here.
@@ -31,9 +32,13 @@ class WebsitePasswordCreateView(ListCreateAPIView):
 
     
     def list(self, request):
-        queryset = self.get_queryset()
-        serializer = WebsitePasswordSerializer(queryset, many=True)
-        return Response(serializer.data)
+        try: 
+            queryset = self.get_queryset()
+            serializer = WebsitePasswordSerializer(queryset, many=True)
+            return Response(serializer.data)
+        except Exception as exp:
+          logging.error(exp)  # For python 3
+          return Response(exp, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class GetDecryptedPasswordView(CreateAPIView):

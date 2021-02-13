@@ -26,6 +26,14 @@ module.exports = {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.mp4$/,
+        use: 'file-loader?name=videos/[name].[ext]',
+      },
+      {
+        test: /\.webm$/,
+        use: 'file-loader?name=videos/[name].[ext]',
+      },
     ],
   },
   optimization: {

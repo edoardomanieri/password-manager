@@ -11,13 +11,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
 import Axios from 'axios';
+import pass from "../../static/images/pass.jpg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(../../static/images/pass.jpg)',
+    backgroundImage: `url(${pass})`,
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],

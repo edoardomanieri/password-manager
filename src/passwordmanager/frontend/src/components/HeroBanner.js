@@ -1,4 +1,5 @@
 import React from "react";
+import safeapp from "../../static/images/safeapp.jpg";
 
 function GetStartedButton() {
   return (
@@ -30,7 +31,7 @@ export default function HeroBanner( {isLoggedIn} ) {
         </div>
 
         <div className="section-image">
-          <img src="../../static/images/safeapp.jpg" alt="app preview" />
+          <img src={safeapp} alt="app preview" />
         </div>
       </div>
     </section>

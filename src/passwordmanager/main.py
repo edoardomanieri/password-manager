@@ -1,14 +1,4 @@
 from passwordmanager.wsgi import application
-from rest_framework_jwt import utils
-from accounts.serializers import UserSerializer
-
-def my_jwt_response_handler(token, user=None, request=None):
-    return {
-        'token': token,
-        'user': UserSerializer(user, context={'request': request}).data
-    }
-
-utils.jwt_payload_handler = my_jwt_response_handler
 
 # App Engine by default looks for a main.py file at the root of the app
 # directory with a WSGI-compatible object called app.

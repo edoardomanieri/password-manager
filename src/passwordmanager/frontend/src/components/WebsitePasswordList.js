@@ -23,6 +23,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Cookies from 'js-cookie';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
+import safeapp from "../../static/images/safeapp.jpg";
+import videomp4 from "../../static/images/video.mp4";
+import videowebm from "../../static/images/video.webm";
+import poster from "../../static/images/poster.png";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -135,7 +139,7 @@ export default function WebsitePasswordList() {
     ]);
 
     const fetchData = () => {
-        Axios.get('/websitepasswords/list',
+        Axios.get('/websitepasswords/list/',
         {
             headers: {
               Authorization: `JWT ${localStorage.getItem('token')}`
@@ -164,7 +168,7 @@ export default function WebsitePasswordList() {
           <Card className={classes.card}>
           <CardMedia
             className={classes.cardMedia}
-            image="../../static/images/safeapp.jpg"
+            image={safeapp}
             title="Image title"
           />
           <CardContent className={classes.cardContent}>
@@ -205,9 +209,9 @@ export default function WebsitePasswordList() {
     return (
     <div className={classes.root}>
       <div class="fullscreen-bg">
-      <video loop muted autoPlay class="fullscreen-bg__video">
-        <source src="../../static/images/video.mp4" type="video/mp4" />
-        <source src="../../static/images/video.webm" type="video/webm" />
+      <video loop muted autoPlay poster={poster} playsInline class="fullscreen-bg__video">
+        <source src={videomp4} type="video/mp4" />
+        <source src={videowebm} type="video/webm" />
       </video>
       </div>
      <TextField 
@@ -232,9 +236,11 @@ export default function WebsitePasswordList() {
      />
       <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
-            {filteredWebsitePasswords.map((object) => (
+            {(websitePasswords.length == 0 || websitePasswords[0].user.valueOf() == "") ? null :
+            filteredWebsitePasswords.map((object) => (
               <WebsitePasswordCard object={object} />
-            ))}
+            ))
+          }
           </Grid>
         </Container>
       <IconButton style={{ fontSize: 80, position:"fixed", bottom:30, right:5 }} onClick={handleClick}>

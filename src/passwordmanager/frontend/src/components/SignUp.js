@@ -94,7 +94,7 @@ export default function SignUp() {
       return;
     
     //todo: change this
-    Axios.post('http://127.0.0.1:8000/accounts/users/', 
+    Axios.post('https://betterpass.nw.r.appspot.com/accounts/users/', 
     {
         'username': username,
         'email': email,

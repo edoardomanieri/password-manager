@@ -91,8 +91,8 @@ if os.getenv('GAE_APPLICATION', None):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/' + keys['connection_name'],
-            'USER': keys['user'],
+            'HOST': '/cloudsql/betterpass:europe-west2:betterpass-instance',
+            'USER': 'edoardo',
             'PASSWORD': '',
             'NAME': 'betterpassdb',
         }
@@ -180,4 +180,6 @@ CORS_ORIGIN_WHITELIST = (
     'https://betterpass.nw.r.appspot.com'
 )
 
-
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'passwordmanager.utils.my_jwt_response_handler'
+}

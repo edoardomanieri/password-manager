@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer, UserSerializerWithToken
+import logging
 
 
 class UserList(APIView):
@@ -16,8 +17,12 @@ class UserList(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
-        serializer = UserSerializerWithToken(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(print(serializer.errors), status=status.HTTP_400_BAD_REQUEST)
+        try:
+            serializer = UserSerializerWithToken(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(print(serializer.errors), status=status.HTTP_400_BAD_REQUEST)
+        except Exception as exp:
+          logging.error(exp)  # For python 3
+          return Response(exp, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
