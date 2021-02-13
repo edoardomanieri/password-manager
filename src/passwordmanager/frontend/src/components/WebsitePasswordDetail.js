@@ -19,13 +19,14 @@ import { useHistory } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
+import safecode from "../../static/images/safecode.jpg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(../../static/images/safecode.jpg)',
+    backgroundImage: `url(${safecode})`,
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],

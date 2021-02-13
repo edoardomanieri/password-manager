@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
 import Axios from 'axios';
+import safecode from "../../static/images/safecode.jpg";
 
 
 function Copyright() {
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
       height: '100vh',
     },
     image: {
-      backgroundImage: 'url(../../static/images/safecode.jpg)',
+      backgroundImage: `url(${safecode})`,
       backgroundRepeat: 'no-repeat',
       backgroundColor:
         theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -103,7 +104,7 @@ export default function SignUp() {
     {
     headers: {
         'Content-Type': 'application/json',
-        "X-CSRFToken": csrfToken
+        'X-CSRFToken': csrfToken
       }
     })
     .then(res => {
@@ -123,7 +124,7 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Sign Up
         </Typography>
         <form className={classes.form} noValidate>
               <TextField

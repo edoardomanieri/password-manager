@@ -1,6 +1,5 @@
 from pathlib import Path
 import json
-import sys
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -58,7 +57,7 @@ ROOT_URLCONF = 'passwordmanager.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -93,7 +92,7 @@ if os.getenv('GAE_APPLICATION', None):
             'ENGINE': 'django.db.backends.mysql',
             'HOST': '/cloudsql/betterpass:europe-west2:betterpass-instance',
             'USER': 'edoardo',
-            'PASSWORD': '',
+            'PASSWORD': keys['password'],
             'NAME': 'betterpassdb',
         }
     }
@@ -111,7 +110,7 @@ else:
             'PORT': '3306',
             'NAME': 'betterpassdb',
             'USER': 'edoardo',
-            'PASSWORD': '',
+            'PASSWORD': keys['password'],
         }
     }
 # [END db_setup]
