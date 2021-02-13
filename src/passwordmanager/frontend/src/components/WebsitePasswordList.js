@@ -221,7 +221,7 @@ export default function WebsitePasswordList() {
      onChange={(e) => setInputValue(e.target.value)}
      style={{
       margin: "2rem",
-      marginLeft: "200px",
+      marginLeft: "15%",
       width: "70%",
       fontSize: "1.5rem",
       backgroundColor: '#FFFFFF'
