@@ -1,11 +1,13 @@
 # BetterPass Website
 
-## A WebApp to safely store all your passwords and retrieve them by just remembering the main one. Check it out at [https://betterpass.nw.r.appspot.com/](https://betterpass.nw.r.appspot.com/)
+## A WebApp to safely store all your passwords and retrieve them by just remembering the main one. 
+<br />
+
+## Check it out at [https://betterpass.nw.r.appspot.com/](https://betterpass.nw.r.appspot.com/)
 
 Login credentials to play around with it without creating a new user:
 * username: admin
 * password: admin
-
 
 <br />
 
