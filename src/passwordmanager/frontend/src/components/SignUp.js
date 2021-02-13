@@ -93,6 +93,7 @@ export default function SignUp() {
     if (!validate())
       return;
     
+    //todo: change this
     Axios.post('http://127.0.0.1:8000/accounts/users/', 
     {
         'username': username,
