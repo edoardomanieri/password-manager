@@ -3,7 +3,7 @@
 ## A WebApp to safely store all your passwords and retrieve them by just remembering the main one. 
 <br />
 
-## Check it out at [https://betterpass.nw.r.appspot.com/](https://betterpass.nw.r.appspot.com/)
+## Check it out at [https://www.betterpass.me/](https://www.betterpass.me/)
 
 Login credentials to play around with it without creating a new user:
 * username: admin
@@ -18,9 +18,9 @@ Login credentials to play around with it without creating a new user:
 
 * JWT Authentication: implemented state of the art authentication system using JWT token ([More info here](https://www.google.com))
 
-* Symmetric entryption for personal passwords implemente using the Fernet algorithm
+* Symmetric entryption for personal passwords implemented using the Fernet algorithm
 
-* Deployed using Google Cloud App Engine
+* Deployed using Google Cloud App Engine (SSL Secured)
 
 <br />
 
