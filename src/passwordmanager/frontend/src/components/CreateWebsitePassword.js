@@ -69,7 +69,8 @@ const validate = () => {
   return true;
 }
 
-  function handleSubmit(){
+  function handleSubmit(e){
+      e.preventDefault();
       if (!validate())
         return;
       let websiteUrlFormatted = websiteURL;
@@ -173,6 +174,18 @@ const validate = () => {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
+                fullWidth
+                multiline
+                label="Notes"
+                id="notes"
+                name="notes"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
                 error={errorTextMasterPassword.length != 0}
                 helperText={errorTextMasterPassword}
                 required
@@ -185,26 +198,13 @@ const validate = () => {
                 onChange={(e) => setMasterPassword(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                multiline
-                label="Notes"
-                id="notes"
-                name="notes"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-              />
-            </Grid>
           </Grid>
           <Button
-            type="button"
+            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleSubmit}
           >
             Save Website Password
           </Button>

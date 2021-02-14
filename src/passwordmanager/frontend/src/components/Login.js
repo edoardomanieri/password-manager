@@ -70,7 +70,8 @@ export default function Login({ setLogin }) {
   const classes = useStyles();
 
 
-  function handle_login() {
+  function handleLogin(e) {
+    e.preventDefault();
     Axios.post('/login/token-auth/',
     {
       'username': username,
@@ -105,7 +106,7 @@ export default function Login({ setLogin }) {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <form className={classes.form} noValidate onSubmit={ handle_login }>
+          <form className={classes.form} noValidate onSubmit={ handleLogin }>
             <TextField
               variant="outlined"
               margin="normal"
@@ -137,12 +138,11 @@ export default function Login({ setLogin }) {
               onChange={ e => setPassword(e.target.value) }
             />
             <Button
-              type="button"
+              type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={ handle_login }
             >
               Sign In
             </Button>

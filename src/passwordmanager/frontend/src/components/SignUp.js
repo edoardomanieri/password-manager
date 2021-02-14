@@ -70,6 +70,7 @@ export default function SignUp() {
   const [errorTextEmail, setErrorTextEmail] = useState("");
   const csrfToken = Cookies.get('csrftoken');
   const history = useHistory();
+  const currentUrl = window.location.href;
 
   const validate = () => {
     let validation = true;
@@ -90,12 +91,15 @@ export default function SignUp() {
     return validation;
   }
 
-  function handle_signup() {
+  function handleSignup(e) {
+    e.preventDefault();
+  
     if (!validate())
       return;
     
+    const url = currentUrl.split('/').slice(0, -2).join('/').concat("/accounts/users/");
     //todo: change this
-    Axios.post('https://betterpass.nw.r.appspot.com/accounts/users/', 
+    Axios.post(url, 
     {
         'username': username,
         'email': email,
@@ -126,7 +130,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSignup}>
               <TextField
                 autoComplete="username"
                 margin="normal"
@@ -183,12 +187,11 @@ export default function SignUp() {
                 onChange={(e) => setPassword2(e.target.value)}
               />
           <Button
-            type="button"
+            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={ handle_signup }
           >
             Sign Up
           </Button>
