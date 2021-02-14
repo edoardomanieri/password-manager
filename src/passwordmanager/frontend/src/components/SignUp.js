@@ -70,7 +70,6 @@ export default function SignUp() {
   const [errorTextEmail, setErrorTextEmail] = useState("");
   const csrfToken = Cookies.get('csrftoken');
   const history = useHistory();
-  const currentUrl = window.location.href;
 
   const validate = () => {
     let validation = true;
@@ -97,7 +96,8 @@ export default function SignUp() {
     if (!validate())
       return;
     
-    const url = currentUrl.split('/').slice(0, -2).join('/').concat("/accounts/users/");
+    var currentUrl = window.location;
+    const url = currentUrl.protocol + "//" + currentUrl.host + "/accounts/users/";
     //todo: change this
     Axios.post(url, 
     {
