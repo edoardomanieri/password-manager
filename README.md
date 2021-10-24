@@ -1,9 +1,9 @@
 # BetterPass Website
 
-## A WebApp to safely store all your passwords and retrieve them by just remembering the main one. 
+## A WebApp to safely store all your passwords. 
 <br />
 
-## Check it out at [https://www.betterpass.me/](https://www.betterpass.me/)
+## Check it out at [https://www.betterpass.me/](https://www.betterpass.me/) (currently not online)
 
 Login credentials to play around with it without creating a new user:
 * username: admin
