@@ -109,8 +109,8 @@ else:
             'HOST': '127.0.0.1',
             'PORT': '3306',
             'NAME': 'betterpassdb',
-            'USER': 'edoardo',
-            'PASSWORD': keys['password'],
+            'USER': 'root',
+            'PASSWORD': keys['mysql_root_password'],
         }
     }
 # [END db_setup]
