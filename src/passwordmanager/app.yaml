@@ -11,3 +11,5 @@ handlers:
 # the entire handlers section) when there are no static files defined.
 - url: /.*
   script: auto
+
+# entrypoint: bash -c 'python3 manage.py migrate --noinput && gunicorn -b :$PORT main:app'
