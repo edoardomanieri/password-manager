@@ -21,3 +21,4 @@ GCP deployment
 7. run: gcloud app deploy
 8. on app.yaml comment the entrypoint line again
 9. run: gcloud app deploy
+10. go to app engine and click on enable application
