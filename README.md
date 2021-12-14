@@ -3,7 +3,7 @@
 ## A WebApp to safely store all your passwords. 
 <br />
 
-## Check it out at [https://www.betterpass.me/](https://www.betterpass.me/) (currently not online)
+## Check it out at [https://www.betterpass.me/](https://www.betterpass.me/) (currently offline)
 
 Login credentials to play around with it without creating a new user:
 * username: admin
