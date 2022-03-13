@@ -16,7 +16,7 @@ Login credentials to play around with it without creating a new user:
 
 * Frontend: React
 
-* JWT Authentication: implemented state of the art authentication system using JWT token ([More info here](https://www.google.com))
+* JWT Authentication: implemented state of the art authentication system using JWT token ([More info here](https://jwt.io))
 
 * Symmetric entryption for personal passwords implemented using the Fernet algorithm
 
