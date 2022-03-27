@@ -17,8 +17,16 @@ GCP deployment
 3. create a database on the instance called 'betterpassdb'
 4. create a user called 'edoardo' with password that you can find on the keys.json file with key 'password'
 5. set debug=False on the passwordmanager/settings.py
-6. on app.yaml uncomment the entrypoint line
-7. run: gcloud app deploy
-8. on app.yaml comment the entrypoint line again
-9. run: gcloud app deploy
-10. go to app engine and click on enable application
+6. go to app engine -> settings -> enable application
+7. on app.yaml uncomment the entrypoint line
+8. run: gcloud app deploy
+9. on app.yaml comment the entrypoint line again
+10. run: gcloud app deploy
+
+
+Heroku deployment: [guide](https://testdriven.io/blog/deploying-django-to-heroku-with-docker/)
+1. docker buildx build --platform linux/amd64 -t registry.heroku.com/mysterious-coast-42516/web .
+2. docker push registry.heroku.com/mysterious-coast-42516/web
+3. heroku container:release --app mysterious-coast-42516 web
+4. heroku open -a mysterious-coast-42516
+5. heroku logs -a mysterious-coast-42516 --tail

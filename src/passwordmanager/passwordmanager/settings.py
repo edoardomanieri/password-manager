@@ -1,6 +1,7 @@
 from pathlib import Path
 import json
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,12 +16,12 @@ LOGOUT_REDIRECT_URL = '/'
 with open(BASE_DIR / 'keys.json') as json_file:
     keys = json.load(json_file)
 
-SECRET_KEY = keys['secret_key']
+SECRET_KEY = os.environ.get('SECRET_KEY', default='foo')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = int(os.environ.get('DEBUG', default=0))
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'mysterious-coast-42516.herokuapp.com']
 
 
 # Application definition
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -84,35 +86,23 @@ pymysql.version_info = (1, 5, 7, 'final', 0)  # change mysqlclient version
 pymysql.install_as_MySQLdb()
 
 # [START db_setup]
-if os.getenv('GAE_APPLICATION', None):
-    # Running on production App Engine, so connect to Google Cloud SQL using
-    # the unix socket at /cloudsql/<your-cloudsql-connection string>
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/betterpass:europe-west2:betterpass-instance',
-            'USER': 'edoardo',
-            'PASSWORD': keys['password'],
-            'NAME': 'betterpassdb',
-        }
+
+# Running locally so connect to either a local MySQL instance or connect to
+# Cloud SQL via the proxy. To start the proxy via command line:
+#
+#     $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
+#
+# See https://cloud.google.com/sql/docs/mysql-connect-proxy
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'NAME': 'betterpassdb',
+        'USER': 'root',
+        'PASSWORD': keys['mysql_root_password'],
     }
-else:
-    # Running locally so connect to either a local MySQL instance or connect to
-    # Cloud SQL via the proxy. To start the proxy via command line:
-    #
-    #     $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
-    #
-    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': '127.0.0.1',
-            'PORT': '3306',
-            'NAME': 'betterpassdb',
-            'USER': 'root',
-            'PASSWORD': keys['mysql_root_password'],
-        }
-    }
+}
 # [END db_setup]
 if os.getenv('TRAMPOLINE_CI', None):
     DATABASES = {
@@ -121,6 +111,10 @@ if os.getenv('TRAMPOLINE_CI', None):
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+
+DATABASE_URL = os.environ.get('DATABASE_URL')
+db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -160,7 +154,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'static'
+STATIC_ROOT = BASE_DIR / 'static'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 REST_FRAMEWORK = {
