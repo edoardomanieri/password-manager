@@ -3,7 +3,7 @@
 ## A WebApp to safely store all your passwords. 
 <br />
 
-## Check it out [here](https://betterpass.nw.r.appspot.com) (Currently offline)
+## Check it out [here](https://mysterious-coast-42516.herokuapp.com/)
 
 Login credentials to play around with it without creating a new user:
 * username: admin
@@ -20,7 +20,7 @@ Login credentials to play around with it without creating a new user:
 
 * Symmetric entryption for personal passwords implemented using the Fernet algorithm
 
-* Deployed using Google Cloud App Engine (SSL Secured)
+* Deployed using Docker and Heroku (SSL Secured)
 
 <br />
 
