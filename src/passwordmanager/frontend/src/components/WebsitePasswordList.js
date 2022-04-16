@@ -23,9 +23,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Cookies from 'js-cookie';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
+import ImageButtonLock from "./ImageButtonLock";
 import safeapp from "../../static/images/safeapp.jpg";
-import videomp4 from "../../static/images/video.mp4";
-import videowebm from "../../static/images/video.webm";
+import padlock from "../../static/images/padlock2.png";
 import poster from "../../static/images/poster.png";
 
 
@@ -48,9 +48,12 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    borderWidth:'1px',
+    borderStyle:'solid',
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
+    borderBottom: '1px solid',
   },
   cardContent: {
     flexGrow: 1,
@@ -168,15 +171,15 @@ export default function WebsitePasswordList() {
           <Card className={classes.card}>
           <CardMedia
             className={classes.cardMedia}
-            image={safeapp}
+            image={padlock}
             title="Image title"
           />
           <CardContent className={classes.cardContent}>
             <Typography gutterBottom variant="h5" component="h2">
             {object.website_name}
             </Typography>
-            <Typography>
-              URL: {object.website_url}
+            <Typography style={{fontWeight: "bold"}}>
+              {object.website_url}
             </Typography>
           </CardContent>
           <CardActions>
@@ -208,12 +211,6 @@ export default function WebsitePasswordList() {
     
     return (
     <div className={classes.root}>
-      <div class="fullscreen-bg">
-      <video loop muted autoPlay poster={poster} playsInline class="fullscreen-bg__video">
-        <source src={videomp4} type="video/mp4" />
-        <source src={videowebm} type="video/webm" />
-      </video>
-      </div>
      <TextField 
      variant="outlined"
      placeholder="Search..."
@@ -236,7 +233,8 @@ export default function WebsitePasswordList() {
      />
       <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
-            {(websitePasswords.length == 0 || websitePasswords[0].user.valueOf() == "") ? null :
+            {(websitePasswords.length == 0 || websitePasswords[0].user.valueOf() == "") ?
+            <ImageButtonLock onClick={handleClick} />  :
             filteredWebsitePasswords.map((object) => (
               <WebsitePasswordCard object={object} />
             ))

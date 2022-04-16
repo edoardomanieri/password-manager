@@ -1,5 +1,9 @@
 import React from "react";
 import safeapp from "../../static/images/safeapp.jpg";
+import Button from "@material-ui/core/Button";
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
+import { useHistory } from "react-router-dom";
 
 function GetStartedButton() {
   return (
@@ -114,7 +118,7 @@ function Services() {
     <section id="services">
       <div className="section-text">
         <div className="section-text__title-centered">
-          How can we help you with BetterPass
+          How we can help you with BetterPass
         </div>
         <div className="service-cards">
           <div className="service-card">
@@ -163,6 +167,12 @@ function Services() {
 
 export default function HeroBanner( {isLoggedIn} ) {
 
+    const history = useHistory();
+
+    const handleClick = () => {
+        history.push("/create");
+      }
+
   return (
     <div>
     <section id="home">
@@ -187,6 +197,11 @@ export default function HeroBanner( {isLoggedIn} ) {
         </div>
       </div>
     </section>
+    {!isLoggedIn ? null :
+      <IconButton style={{ fontSize: 80, position:"fixed", bottom:30, right:5 }} onClick={handleClick}>
+      <Icon style={{ fontSize: 80 }} color="primary">add_circle</Icon>
+      </IconButton>
+    }
     <Services />
     </div>
   );

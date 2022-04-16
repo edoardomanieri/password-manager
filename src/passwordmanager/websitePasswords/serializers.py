@@ -51,7 +51,7 @@ class CreateWebsitePasswordSerializer(serializers.ModelSerializer):
 
     # createAPIview post request is handled by -> .create that calls -> .perform_create that calls -> serializer.save() that calls -> serializer.create() or serializer.update() as needed
     def create(self, validated_data):
-        user = str(self.context['request'].user)
+        user = self.context['request'].user
         master_password = validated_data.pop('master_password')
 
         password = validated_data.get('password')
@@ -74,6 +74,5 @@ class CreateWebsitePasswordSerializer(serializers.ModelSerializer):
         encrypted_password = encrypt(password, master_password)
         validated_data['password'] = encrypted_password
         instance.password = validated_data.get('password', instance.password)
-        print(instance.website_name)
         instance.save()
         return instance

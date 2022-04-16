@@ -11,7 +11,6 @@ from .encryption import decrypt
 import logging
 
 
-# Create your views here.
 class WebsitePasswordCreateView(ListCreateAPIView):
     serializer_class = CreateWebsitePasswordSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -27,8 +26,7 @@ class WebsitePasswordCreateView(ListCreateAPIView):
 
 
     def get_queryset(self):
-        user = self.request.user
-        return WebsitePassword.objects.filter(user=user)
+        return WebsitePassword.objects.filter(user=self.request.user)
 
     
     def list(self, request):

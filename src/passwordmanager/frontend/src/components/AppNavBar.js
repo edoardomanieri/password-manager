@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppNavBar({isLoggedIn, setLogin }) {
+export default function AppNavBar({isLoggedIn, setLogin}) {
   const classes = useStyles();
   const history = useHistory();
 
