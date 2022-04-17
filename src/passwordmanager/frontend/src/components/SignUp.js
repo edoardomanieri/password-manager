@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function SignUp() {
+export default function SignUp({ setLogin }) {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -112,10 +112,13 @@ export default function SignUp() {
       }
     })
     .then(res => {
-        localStorage.setItem('token', res.data.token);
-        history.push("/login");
+            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('user', username);
+            setLogin();
+            history.push("/");
     })
     .catch(error => alert(error))
+
   }
 
   return (

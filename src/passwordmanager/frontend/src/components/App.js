@@ -47,7 +47,7 @@ export default class App extends Component {
                     {this.state.isLoggedIn ? <WebsitePasswordList /> : <Redirect to="/login"/>}
                     </Route>
                     <Route path='/login' render={(props) => <Login {...props} setLogin={this.setLogin} />}/>
-                    <Route path='/signup' component={SignUp}/>
+                    <Route path='/signup' render={(props) => <SignUp {...props} setLogin={this.setLogin} />}/>
                     <Route path='/:user/:website_name' component={WebsitePasswordDetail}/>
                 </Switch>
             </Router>
