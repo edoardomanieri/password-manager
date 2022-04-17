@@ -30,3 +30,4 @@ Heroku deployment: [guide](https://testdriven.io/blog/deploying-django-to-heroku
 3. heroku container:release --app mysterious-coast-42516 web
 4. heroku open -a mysterious-coast-42516
 5. heroku logs -a mysterious-coast-42516 --tail
+6. (if you need to migrate the db): heroku run python manage.py migrate --app mysterious-coast-42516
