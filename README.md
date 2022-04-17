@@ -1,6 +1,6 @@
-# BetterPass Website
+# BetterPass
 
-## A WebApp to safely store all your passwords. 
+## A WebApp to safely store and retrieve all your passwords
 <br />
 
 ## Check it out [here](https://mysterious-coast-42516.herokuapp.com/)
@@ -16,9 +16,9 @@ Login credentials to play around with it without creating a new user:
 
 * Frontend: React
 
-* JWT Authentication: implemented state of the art authentication system using JWT token ([More info here](https://jwt.io))
+* JWT Authentication ([More info here](https://jwt.io))
 
-* Symmetric entryption for personal passwords implemented using the Fernet algorithm
+* Symmetric encryption implemented using the Fernet algorithm
 
 * Deployed using Docker and Heroku (SSL Secured)
 
