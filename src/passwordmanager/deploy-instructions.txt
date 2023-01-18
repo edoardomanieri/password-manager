@@ -31,3 +31,10 @@ Heroku deployment: [guide](https://testdriven.io/blog/deploying-django-to-heroku
 4. heroku open -a mysterious-coast-42516
 5. heroku logs -a mysterious-coast-42516 --tail
 6. (if you need to migrate the db): heroku run python manage.py migrate --app mysterious-coast-42516
+
+
+fly.io deployment:
+1. fly launch (without overriding Dockerfile)
+2. fly ssh console
+3. cd code && ./manage.py migrate
+

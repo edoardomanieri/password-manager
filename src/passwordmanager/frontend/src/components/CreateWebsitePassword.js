@@ -78,7 +78,7 @@ const validate = () => {
           websiteUrlFormatted = "https://".concat(websiteUrlFormatted);
           setWebsiteURL(websiteUrlFormatted);
         }
-      Axios.post("/websitepasswords/create-website-password/",
+      Axios.post("/websitepasswords/",
       {
         'website_url': websiteUrlFormatted,
         'website_name': websiteName,

@@ -3,30 +3,26 @@ from rest_framework import serializers
 from .models import WebsitePassword
 from .encryption import encrypt
 
-# we will use this to send a response back to the browser
+
 class MasterPasswordSerializer(serializers.Serializer):
     master_password = serializers.CharField(max_length=100)
     encrypted_password = serializers.CharField(max_length=10000)
 
-
     def validate_master_password(self, value):
         user = self.context['request'].user
-        if not user.check_password(value):	
-           raise serializers.ValidationError("Wrong Master Password") 
+        if not user.check_password(value):
+            raise serializers.ValidationError("Wrong Master Password")
         return value
 
 
-# we will use this to send a response back to the browser
 class WebsitePasswordSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = WebsitePassword
         fields = '__all__'
 
 
-# only the fields that we need for the post request
 class CreateWebsitePasswordSerializer(serializers.ModelSerializer):
-    master_password = serializers.CharField(max_length=100)
+    master_password = serializers.CharField(max_length=100, write_only=True)
 
     class Meta:
         model = WebsitePassword
@@ -44,10 +40,9 @@ class CreateWebsitePasswordSerializer(serializers.ModelSerializer):
         # cleaned_data doesn't work for fields not in model	
         master_password = data.get('master_password')
         user = self.context['request'].user
-        if not user.check_password(master_password):	
-           raise serializers.ValidationError("Wrong Master Password") 	
+        if not user.check_password(master_password):
+            raise serializers.ValidationError("Wrong Master Password")
         return data
-
 
     # createAPIview post request is handled by -> .create that calls -> .perform_create that calls -> serializer.save() that calls -> serializer.create() or serializer.update() as needed
     def create(self, validated_data):
@@ -60,7 +55,6 @@ class CreateWebsitePasswordSerializer(serializers.ModelSerializer):
 
         data = {**validated_data, 'user': user}
         return WebsitePassword.objects.create(**data)
-
 
     def update(self, instance, validated_data):
         instance.website_url = validated_data.get('website_url', instance.website_url)

@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
+import Axios from 'axios';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -70,7 +70,7 @@ const ButtonDialogUpdate = ( {id, websiteURL, websiteName, username, notes, encr
   };
 
   const getPlainPasswordPromise = () => {
-    return axios.post("/websitepasswords/get-password/",
+    return axios.post("/websitepasswords/get-decrypted-password/",
     {
       'master_password': masterPassword,
       'encrypted_password': encryptedPassword
@@ -104,7 +104,7 @@ async function handleUpdate()  {
     plainPasswordSync = plainPassword;
   }
 
-  axios.put(`/websitepasswords/update-website-password/${id}`,
+  axios.put(`/websitepasswords/${id}`,
   {
     'website_url': websiteURL,
     'website_name': websiteName,
@@ -180,7 +180,7 @@ const ButtonDialogShow = ( {encryptedPassword, setPlainPassword, isPasswordChang
 
   const handleEnteredPassword = () => {
     setOpenShow(false);
-    axios.post("/websitepasswords/get-password/",
+    axios.post("/websitepasswords/get-decrypted-password/",
     {
       'master_password': masterPassword,
       'encrypted_password': encryptedPassword
@@ -197,7 +197,7 @@ const ButtonDialogShow = ( {encryptedPassword, setPlainPassword, isPasswordChang
     setPlainPassword(response.data.plain_password);
     setIsPasswordPlain(true);
   })
-  .catch(error => alert("wrong passwrod"));
+  .catch(error => console.error(error));
 }
 
 

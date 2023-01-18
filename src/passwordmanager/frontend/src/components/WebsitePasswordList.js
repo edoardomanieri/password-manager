@@ -75,7 +75,7 @@ function AlertDialog( {fetchData, id} ) {
   
   const handleCloseAccept = () => {
     setOpen(false);
-    Axios.delete(`/websitepasswords/delete-website-password/${id}`,
+    Axios.delete(`/websitepasswords/${id}`,
     {
       headers: {
               Authorization: `JWT ${localStorage.getItem('token')}`,
@@ -142,7 +142,7 @@ export default function WebsitePasswordList() {
     ]);
 
     const fetchData = () => {
-        Axios.get('/websitepasswords/list/',
+        Axios.get('/websitepasswords/',
         {
             headers: {
               Authorization: `JWT ${localStorage.getItem('token')}`

@@ -13,12 +13,10 @@ with open(BASE_DIR / 'keys.json') as json_file:
 
 SECRET_KEY = os.environ.get('SECRET_KEY', default='foo')
 
-DEBUG = int(os.environ.get('DEBUG', default=0))
+DEBUG = int(os.environ.get('DEBUG', default=1))
+DEBUG_PROPAGATE_EXCEPTIONS = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'mysterious-coast-42516.herokuapp.com']
-
-
-# Application definition
+ALLOWED_HOSTS = ["betterpass.fly.dev", "127.0.0.1"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -27,10 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework',
     'corsheaders',
-
     'websitePasswords',
     'accounts.apps.AccountsConfig',
     'frontend.apps.FrontendConfig'
@@ -78,7 +74,7 @@ DATABASES = {
 }
 
 DATABASE_URL = os.environ.get('DATABASE_URL')
-db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=False)
 DATABASES['default'].update(db_from_env)
 
 
@@ -136,7 +132,8 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',
-    'https://mysterious-coast-42516.herokuapp.com'
+    'http://127.0.0.1:8000',
+    'https://betterpass.fly.dev',
 )
 
 JWT_AUTH = {

@@ -12,12 +12,9 @@ class UserList(APIView):
 
     permission_classes = (permissions.AllowAny,)
 
-    def post(self, request, format=None):
-        try:
-            serializer = UserSerializerWithToken(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(print(serializer.errors), status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-          return Response(e, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def post(self, request):
+        serializer = UserSerializerWithToken(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

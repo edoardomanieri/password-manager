@@ -1,10 +1,7 @@
-# pull official base image
-FROM python:3.7-alpine
+ARG PYTHON_VERSION=3.9-alpine3.16
 
-# set work directory
-WORKDIR /app
+FROM python:${PYTHON_VERSION}
 
-# set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV DEBUG 0
@@ -15,19 +12,21 @@ RUN apk update \
     && apk add postgresql-dev \
     && pip install psycopg2
 
-# install dependencies
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+RUN mkdir -p /code
 
-# copy project
-COPY . .
+WORKDIR /code
 
-# collect static files
+COPY requirements.txt /tmp/requirements.txt
+
+RUN set -ex && \
+    pip install --upgrade pip && \
+    pip install -r /tmp/requirements.txt && \
+    rm -rf /root/.cache/
+
+COPY . /code/
+
 RUN python manage.py collectstatic --noinput
 
-# add and run as non-root user
-RUN adduser -D myuser
-USER myuser
+EXPOSE 8000
 
-# run gunicorn
-CMD gunicorn passwordmanager.wsgi:application --bind 0.0.0.0:$PORT
+CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "passwordmanager.wsgi"]

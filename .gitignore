@@ -253,3 +253,5 @@ keys.json
 static/
 cloud_sql_proxy
 favicon.ico
+
+postgres
