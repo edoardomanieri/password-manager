@@ -3,7 +3,7 @@
 ## A WebApp to safely store and retrieve all your passwords
 <br />
 
-## Check it out [here](https://mysterious-coast-42516.herokuapp.com/)
+## Check it out [here](https://betterpass.fly.dev/)
 
 Login credentials to play around with it without creating a new user:
 * username: admin
@@ -16,11 +16,11 @@ Login credentials to play around with it without creating a new user:
 
 * Frontend: React
 
-* JWT Authentication ([More info here](https://jwt.io))
+* JWT Authentication
 
-* Symmetric encryption implemented using the Fernet algorithm
+* Symmetric encryption implemented using Fernet algorithm
 
-* Deployed using Docker and Heroku (SSL Secured)
+* Deployed using Docker and fly.io
 
 <br />
 
