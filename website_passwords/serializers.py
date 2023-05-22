@@ -36,15 +36,12 @@ class CreateWebsitePasswordSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, data):
-        # check that the master password is correct and that the website password is at least 4 character long
-        # cleaned_data doesn't work for fields not in model
         master_password = data.get("master_password")
         user = self.context["request"].user
         if not user.check_password(master_password):
             raise serializers.ValidationError("Wrong Master Password")
         return data
 
-    # createAPIview post request is handled by -> .create that calls -> .perform_create that calls -> serializer.save() that calls -> serializer.create() or serializer.update() as needed
     def create(self, validated_data):
         user = self.context["request"].user
         master_password = validated_data.pop("master_password")
