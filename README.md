@@ -5,7 +5,7 @@
 
 ## Check it out [here](https://betterpass.fly.dev/)
 
-Login credentials to play around with it without creating a new user:
+Login credentials to play around with it without creating a new user
 * username: admin
 * password: admin
 
