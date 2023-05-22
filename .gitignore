@@ -251,9 +251,8 @@ dist
 # Custom
 keys.json
 static/
-PasswordManager/cloud_sql_proxy
 favicon.ico
 deploy-instructions.txt
 fly.toml
 
-../postgresc
+../postgres

@@ -26,17 +26,17 @@ Login credentials to play around with it without creating a new user:
 
 ### Pages
 #### Home Page
-![image info](../images/home.png)
+![image info](images/home.png)
 
 <br />
 
 #### Password List Page
-![image info](../images/passwords.png)
+![image info](images/passwords.png)
 
 <br />
 
 #### Website Detail Page
-![image info](../images/passworddetail.png)
+![image info](images/passworddetail.png)
 
 
 
