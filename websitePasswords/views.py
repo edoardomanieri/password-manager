@@ -1,22 +1,27 @@
+from rest_framework import permissions, status
 from rest_framework.generics import (
-    ListCreateAPIView, GenericAPIView, RetrieveUpdateDestroyAPIView
+    GenericAPIView,
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
 )
 from rest_framework.response import Response
-from rest_framework import status
-from rest_framework import permissions
 
-from .serializers import CreateWebsitePasswordSerializer, WebsitePasswordSerializer, MasterPasswordSerializer
-from .models import WebsitePassword
 from .encryption import decrypt
+from .models import WebsitePassword
+from .serializers import (
+    CreateWebsitePasswordSerializer,
+    MasterPasswordSerializer,
+    WebsitePasswordSerializer,
+)
 
 
 class WebsitePasswordListCreateView(ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
-        if self.request.method == 'POST':
+        if self.request.method == "POST":
             return CreateWebsitePasswordSerializer
-        elif self.request.method == 'GET':
+        elif self.request.method == "GET":
             return WebsitePasswordSerializer
 
     def get_queryset(self):
@@ -28,7 +33,7 @@ class WebsitePasswordView(RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
-        pk = self.kwargs.get('pk')
+        pk = self.kwargs.get("pk")
         return WebsitePassword.objects.get(id=pk)
 
 
@@ -40,13 +45,9 @@ class DecryptedPasswordRetrieveView(GenericAPIView):
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            master_password = serializer.data['master_password']
-            encrypted_password = serializer.data['encrypted_password']
+            master_password = serializer.data["master_password"]
+            encrypted_password = serializer.data["encrypted_password"]
             plain_password = decrypt(encrypted_password, master_password)
-            data = {
-                'plain_password': plain_password
-            }
+            data = {"plain_password": plain_password}
             return Response(data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
