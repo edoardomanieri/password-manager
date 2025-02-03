@@ -22,21 +22,41 @@ dependencies = [
   "gunicorn",
   "whitenoise",
   "dj-database-url",
+  "pre-commit>=4.1.0",
 ]
 
 [tool.ruff]
 # Enable specific rule categories
-lint.select = ["B", "C", "E", "F", "W", "B9"]
+lint.select = ["B", "C", "E", "F", "W", "B9", "Q"]
 lint.ignore = ["E203", "E266", "E501", "F403", "F401"]
 
 # Maximum line length
 line-length = 88
 
 # Exclude certain directories
-exclude = ["build", "dist", ".venv"]
+exclude = [
+  ".venv",
+  "venv",
+  "build",
+  "dist",
+  "__pycache__",
+  ".git",
+  ".mypy_cache",
+  ".ruff_cache",
+]
 
 # Fix issues automatically
 fix = true
 
 # Show a preview of fixes without applying them
 preview = false
+
+
+# Target Python version (adjust based on your version)
+target-version = "py312"
+
+[tool.ruff.format]
+# Enable Ruff's built-in Black-compatible formatter
+quote-style = "double" # Options: "double", "single", "preserve"
+indent-style = "space" # Options: "space", "tab"
+line-ending = "lf"     # Options: "lf", "crlf", "native"
