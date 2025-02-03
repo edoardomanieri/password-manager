@@ -1,5 +1,4 @@
-"""
-ASGI config for passwordmanager project.
+"""ASGI config for passwordmanager project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

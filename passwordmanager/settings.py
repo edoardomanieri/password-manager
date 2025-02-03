@@ -17,7 +17,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", default="foo")
 DEBUG = int(os.environ.get("DEBUG", default=1))
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
-ALLOWED_HOSTS = ["betterpass.fly.dev", "127.0.0.1"]
+ALLOWED_HOSTS = ["pm-betterpass.fly.dev", "127.0.0.1"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
-    "websitePasswords",
+    "website_passwords",
     "accounts.apps.AccountsConfig",
     "frontend.apps.FrontendConfig",
 ]

@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class WebsitepasswordsConfig(AppConfig):
+class WebsitePasswordsConfig(AppConfig):
     name = "websitePasswords"

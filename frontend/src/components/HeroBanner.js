@@ -1,14 +1,13 @@
 import React from "react";
 import safeapp from "../../static/images/safeapp.jpg";
-import Button from "@material-ui/core/Button";
-import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
+import Icon from "@material-ui/core/Icon";
+import IconButton from "@material-ui/core/IconButton";
 import { useHistory } from "react-router-dom";
 
 function GetStartedButton() {
   return (
-    <a href="/signup" className="download-btn" style={{ textAlign: "center"}}>
-    Get started
+    <a href="/signup" className="download-btn" style={{ textAlign: "center" }}>
+      Get started
     </a>
   );
 }
@@ -112,7 +111,6 @@ function Footer() {
   );
 }
 
-
 function Services() {
   return (
     <section id="services">
@@ -128,7 +126,8 @@ function Services() {
             <div className="service-card__text-container">
               <div className="section-text__title-small">Easily Manage</div>
               <div className="section-text__body">
-                Keep all of your passwords in one place and quickly retrieve them using the search function.
+                Keep all of your passwords in one place and quickly retrieve
+                them using the search function.
               </div>
             </div>
           </div>
@@ -142,7 +141,8 @@ function Services() {
                 End to End Encryption
               </div>
               <div className="section-text__body">
-                We don't store your passwords in our databases, we use a sophisticated encryption algorithm to keep them safe.
+                We don't store your passwords in our databases, we use a
+                sophisticated encryption algorithm to keep them safe.
               </div>
             </div>
           </div>
@@ -152,7 +152,9 @@ function Services() {
               <ion-icon name="chatbubble-ellipses-outline" />
             </div>
             <div className="service-card__text-container">
-              <div className="section-text__title-small">Quick Update and Delete</div>
+              <div className="section-text__title-small">
+                Quick Update and Delete
+              </div>
               <div className="section-text__body">
                 Quickly update or delete old passwords that you no longer use.
               </div>
@@ -164,46 +166,51 @@ function Services() {
   );
 }
 
+export default function HeroBanner({ isLoggedIn }) {
+  const history = useHistory();
 
-export default function HeroBanner( {isLoggedIn} ) {
-
-    const history = useHistory();
-
-    const handleClick = () => {
-        history.push("/create");
-      }
+  const handleClick = () => {
+    history.push("/create");
+  };
 
   return (
     <div>
-    <section id="home">
-      <div className="container">
-        <div className="home-text">
-          <div className="section-text__subtitle">BetterPass - all in one place</div>
-          <div className="section-text__title-big">
-          Keep your passwords safe with BetterPass
+      <section id="home">
+        <div className="container">
+          <div className="home-text">
+            <div className="section-text__subtitle">
+              BetterPass - all in one place
+            </div>
+            <div className="section-text__title-big">
+              Keep your passwords safe with BetterPass
+            </div>
+            <div className="section-text__body">
+              Manage your passwords, keep them safe and all in one place.
+              Completely free service.
+            </div>
+            {isLoggedIn ? null : (
+              <div>
+                <GetStartedButton />
+              </div>
+            )}
           </div>
-          <div className="section-text__body">
-            Manage your passwords, keep them safe and all in one place. Completely free service.
-          </div>
-          {isLoggedIn ? null :
-          <div>
-          <GetStartedButton /> 
-          </div>
-          }
-        </div>
 
-        <div className="section-image">
-          <img src={safeapp} alt="app preview" />
+          <div className="section-image">
+            <img src={safeapp} alt="app preview" />
+          </div>
         </div>
-      </div>
-    </section>
-    {!isLoggedIn ? null :
-      <IconButton style={{ fontSize: 80, position:"fixed", bottom:30, right:5 }} onClick={handleClick}>
-      <Icon style={{ fontSize: 80 }} color="primary">add_circle</Icon>
-      </IconButton>
-    }
-    <Services />
+      </section>
+      {!isLoggedIn ? null : (
+        <IconButton
+          style={{ fontSize: 80, position: "fixed", bottom: 30, right: 5 }}
+          onClick={handleClick}
+        >
+          <Icon style={{ fontSize: 80 }} color="primary">
+            add_circle
+          </Icon>
+        </IconButton>
+      )}
+      <Services />
     </div>
   );
 }
-

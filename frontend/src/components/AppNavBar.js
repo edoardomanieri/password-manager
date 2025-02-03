@@ -1,10 +1,10 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import { Link } from "react-router-dom"
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import AlertDialog from "./AlertDialog";
 
@@ -20,15 +20,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppNavBar({isLoggedIn, setLogin}) {
+export default function AppNavBar({ isLoggedIn, setLogin }) {
   const classes = useStyles();
   const history = useHistory();
 
   function handleLogout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setLogin();
     history.push("/");
-  };
+  }
 
   return (
     <div className={classes.root}>
@@ -37,35 +37,30 @@ export default function AppNavBar({isLoggedIn, setLogin}) {
           <Typography variant="h6" className={classes.title}>
             BetterPass
           </Typography>
-          <Link to="/" style={{ textDecoration: 'none'}} exact>
-              <Button style={{ color: '#FFFFFF'}}>
-              Home
+          <Link to="/" style={{ textDecoration: "none" }} exact>
+            <Button style={{ color: "#FFFFFF" }}>Home</Button>
+          </Link>
+          {isLoggedIn ? null : (
+            <Link to="/login" style={{ textDecoration: "none" }} exact>
+              <Button style={{ color: "#FFFFFF" }}>Login</Button>
+            </Link>
+          )}
+          {isLoggedIn ? null : (
+            <Link to="/signup" style={{ textDecoration: "none" }} exact>
+              <Button style={{ color: "#FFFFFF" }}>Signup</Button>
+            </Link>
+          )}
+          {!isLoggedIn ? null : (
+            <Link to="/list" style={{ textDecoration: "none" }} exact>
+              <Button
+                className={classes.menuButton}
+                style={{ color: "#FFFFFF" }}
+              >
+                Passwords
               </Button>
-        </Link>
-        {isLoggedIn ? null :
-        <Link to="/login" style={{ textDecoration: 'none'}} exact>
-            <Button style={{ color: '#FFFFFF'}}>
-            Login
-            </Button>
-        </Link>
-        }
-        {isLoggedIn ? null :
-        <Link to="/signup" style={{ textDecoration: 'none'}} exact>
-            <Button style={{ color: '#FFFFFF'}}>
-            Signup
-            </Button>
-        </Link>
-        }
-        {!isLoggedIn ? null :
-        <Link to="/list" exact style={{ textDecoration: 'none'}}>
-            <Button style={{ color: '#FFFFFF'}}>
-            Passwords
-            </Button>
-        </Link>
-        }
-        {!isLoggedIn ? null :
-        <AlertDialog handleLogout={handleLogout} />
-        }
+            </Link>
+          )}
+          {!isLoggedIn ? null : <AlertDialog handleLogout={handleLogout} />}
         </Toolbar>
       </AppBar>
     </div>

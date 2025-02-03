@@ -1,5 +1,4 @@
-"""
-WSGI config for passwordmanager project.
+"""WSGI config for passwordmanager project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
