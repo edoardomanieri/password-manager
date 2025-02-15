@@ -3,7 +3,7 @@
 ## A WebApp to safely store and retrieve all your passwords
 <br />
 
-## Check it out [here](https://betterpass.fly.dev/)
+## Check it out [here](https://pm-betterpass.fly.dev/)
 
 Login credentials to play around with it without creating a new user
 * username: admin
