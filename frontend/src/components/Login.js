@@ -1,58 +1,58 @@
-import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import Axios from 'axios';
+import Axios from "axios";
 import safe from "../../static/images/safe.jpg";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         BetterPass
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    height: "100vh",
   },
   image: {
     backgroundImage: `url(${safe})`,
-    backgroundRepeat: 'no-repeat',
+    backgroundRepeat: "no-repeat",
     backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+      theme.palette.type === "light"
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
+    backgroundSize: "cover",
+    backgroundPosition: "center",
   },
   paper: {
     margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -60,39 +60,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export default function Login({ setLogin }) {
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorTextPassword, setErrorTextPassword] = useState("");
   const history = useHistory();
   const classes = useStyles();
 
-
   function handleLogin(e) {
     e.preventDefault();
-    Axios.post('/login/token-auth/',
-    {
-      'username': username,
-      'password': password
-    },
-     {
-      headers: {
-        'Content-Type': 'application/json'
+    Axios.post(
+      "/login/token-auth/",
+      {
+        username: username,
+        password: password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    })
-    .then(res => {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', username);
+    )
+      .then((res) => {
+        localStorage.setItem("token", res.data.access);
+        localStorage.setItem("refresh", res.data.refresh);
+        localStorage.setItem("user", username);
         setLogin();
         history.push("/");
       })
-    .catch(error => {
-      setErrorTextPassword("Wrong username or password");
-    })
-  };
-
+      .catch((error) => {
+        setErrorTextPassword("Wrong username or password");
+      });
+  }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -106,7 +105,7 @@ export default function Login({ setLogin }) {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <form className={classes.form} noValidate onSubmit={ handleLogin }>
+          <form className={classes.form} noValidate onSubmit={handleLogin}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -119,7 +118,7 @@ export default function Login({ setLogin }) {
               name="username"
               autoComplete="username"
               value={username}
-              onChange={ e => setUsername(e.target.value) }
+              onChange={(e) => setUsername(e.target.value)}
               autoFocus
             />
             <TextField
@@ -134,8 +133,8 @@ export default function Login({ setLogin }) {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={ password }
-              onChange={ e => setPassword(e.target.value) }
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Button
               type="submit"

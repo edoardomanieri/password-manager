@@ -5,11 +5,10 @@ dj-database-url==2.3.0
 django==5.1.5
 django-cors-headers==4.6.0
 djangorestframework==3.15.2
-djangorestframework-jwt==1.11.0
 gunicorn==23.0.0
 packaging==24.2
 pycparser==2.22
-pyjwt==1.7.1
+pyjwt>=2.8.0
 pymysql==1.1.1
 pytz==2025.1
 ruff==0.9.4
@@ -17,3 +16,5 @@ six==1.17.0
 sqlparse==0.5.3
 typing-extensions==4.12.2
 whitenoise==6.8.2
+djangorestframework-simplejwt==5.3.0
+setuptools>=69.0.0

@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class WebsitePasswordsConfig(AppConfig):
-    name = "websitePasswords"
+    name = "website_passwords"
